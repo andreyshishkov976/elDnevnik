@@ -55,11 +55,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Ucheniki.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ucheniki.Designer.cs">
+      <DependentUpon>Ucheniki.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Prepod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Prepod.Designer.cs">
+      <DependentUpon>Prepod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Klassy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Klassy.Designer.cs">
+      <DependentUpon>Klassy.cs</DependentUpon>
+    </Compile>
     <Compile Include="Fakultativy.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Fakultativy.Designer.cs">
       <DependentUpon>Fakultativy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Login.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="Predmety.cs">
       <SubType>Form</SubType>
@@ -83,8 +107,20 @@
     <Compile Include="MySqlQueries.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Ucheniki.resx">
+      <DependentUpon>Ucheniki.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Prepod.resx">
+      <DependentUpon>Prepod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Klassy.resx">
+      <DependentUpon>Klassy.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Fakultativy.resx">
       <DependentUpon>Fakultativy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Predmety.resx">
       <DependentUpon>Predmety.cs</DependentUpon>

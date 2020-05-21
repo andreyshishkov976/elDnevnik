@@ -26,8 +26,15 @@ namespace elDnevnik
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Predmety, null, textBox1.Text);
-            this.Close();
+            if (textBox1.Text != "")
+            {
+                MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Predmety, null, textBox1.Text);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Поля не заполнены", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -37,8 +44,15 @@ namespace elDnevnik
 
         private void button3_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Insert_Update_Delete(MySqlQueries.Update_Predmety, ID, textBox1.Text);
-            this.Close();
+            if (textBox1.Text != "")
+            {
+                MySqlOperations.Insert_Update_Delete(MySqlQueries.Update_Predmety, ID, textBox1.Text);
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("Поля не заполнены", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void Auditorii_FormClosed(object sender, FormClosedEventArgs e)
