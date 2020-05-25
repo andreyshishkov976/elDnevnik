@@ -12,6 +12,13 @@ namespace elDnevnik
         public string Exists_Uroki = $@"SELECT EXISTS(SELECT * FROM uroki WHERE id_raspisaniya = @Value1 AND poradok = @Value2);";
 
         public string Exists_Raspisanie = $@"SELECT EXISTS(SELECT * FROM raspisanie WHERE id_klassa = @Value1 AND den_nedeli = @Value2);";
+
+        public string Exists_Auditorii = $@"SELECT EXISTS(SELECT * FROM auditorii WHERE nom_auditorii = @Value1);";
+        
+        public string Exists_Klassy = $@"SELECT EXISTS(SELECT * FROM klassy WHERE nom_klassa = @Value1 AND parallel = @Value2);";
+
+        public string Exists_Predmety = $@"SELECT EXISTS(SELECT * FROM predmety WHERE naimenovanie = @Value1);";
+
         //Exists
 
         //Select

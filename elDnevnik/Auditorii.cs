@@ -27,14 +27,15 @@ namespace elDnevnik
         private void button1_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
-            {
-                MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Auditorii, null, textBox1.Text);
-                this.Close();
-            }
+                if (MySqlOperations.Select_Text(MySqlQueries.Exists_Auditorii, null, textBox1.Text) == "0")
+                {
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Auditorii, null, textBox1.Text);
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("Аудитория №" + textBox1.Text + " уже присутствует в базе.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
-            {
                 MessageBox.Show("Поля не заполнены", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -45,14 +46,15 @@ namespace elDnevnik
         private void button3_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "")
-            {
-                MySqlOperations.Insert_Update_Delete(MySqlQueries.Update_Auditorii, ID, textBox1.Text);
-                this.Close();
-            }
+                if (MySqlOperations.Select_Text(MySqlQueries.Exists_Auditorii, null, textBox1.Text) == "0")
+                {
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Update_Auditorii, ID, textBox1.Text);
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("Аудитория №" + textBox1.Text + " уже присутствует в базе.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
-            {
                 MessageBox.Show("Поля не заполнены", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
 
         private void Auditorii_FormClosed(object sender, FormClosedEventArgs e)

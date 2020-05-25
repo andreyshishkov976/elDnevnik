@@ -27,8 +27,13 @@ namespace elDnevnik
 
         private void button1_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Klassy, null, numericUpDown1.Value.ToString(), comboBox1.Text, numericUpDown2.Value.ToString());
-            this.Close();
+            if (MySqlOperations.Select_Text(MySqlQueries.Exists_Klassy, null, numericUpDown1.Value.ToString(), comboBox1.Text) == "0")
+            {
+                MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Klassy, null, numericUpDown1.Value.ToString(), comboBox1.Text, numericUpDown2.Value.ToString());
+                this.Close();
+            }
+            else
+                MessageBox.Show("Класс " + numericUpDown1.Value.ToString() + comboBox1.Text + " уже присутствует в базе.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -38,8 +43,13 @@ namespace elDnevnik
 
         private void button3_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Insert_Update_Delete(MySqlQueries.Update_Klassy, ID, numericUpDown1.Value.ToString(), comboBox1.Text, numericUpDown2.Value.ToString());
-            this.Close();
+            if (MySqlOperations.Select_Text(MySqlQueries.Exists_Klassy, null, numericUpDown1.Value.ToString(), comboBox1.Text) == "0")
+            {
+                MySqlOperations.Insert_Update_Delete(MySqlQueries.Update_Klassy, ID, numericUpDown1.Value.ToString(), comboBox1.Text, numericUpDown2.Value.ToString());
+                this.Close();
+            }
+            else
+                MessageBox.Show("Класс " + numericUpDown1.Value.ToString() + comboBox1.Text + " уже присутствует в базе.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
 
         private void Klassy_FormClosed(object sender, FormClosedEventArgs e)
