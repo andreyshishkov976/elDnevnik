@@ -55,6 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Raspisanie.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Raspisanie.Designer.cs">
+      <DependentUpon>Raspisanie.cs</DependentUpon>
+    </Compile>
     <Compile Include="Ucheniki.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
     <Compile Include="MySqlQueries.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Raspisanie.resx">
+      <DependentUpon>Raspisanie.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Ucheniki.resx">
       <DependentUpon>Ucheniki.cs</DependentUpon>
     </EmbeddedResource>

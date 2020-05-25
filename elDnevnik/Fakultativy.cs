@@ -24,7 +24,7 @@ namespace elDnevnik
             this.ID = iD;
             MySqlOperations.Select_ComboBox(MySqlQueries.Select_Predmety_ComboBox, comboBox1);
             MySqlOperations.Select_ComboBox(MySqlQueries.Select_Auditorii_ComboBox, comboBox2);
-            MySqlOperations.Select_ComboBox(MySqlQueries.Select_Prepod_ComboBox, comboBox2);
+            MySqlOperations.Select_ComboBox(MySqlQueries.Select_Prepod_ComboBox, comboBox3);
         }
 
         private void button1_Click(object sender, EventArgs e)

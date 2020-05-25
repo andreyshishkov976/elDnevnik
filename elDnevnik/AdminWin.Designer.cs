@@ -38,6 +38,7 @@
             this.факультативыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.классыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.преподавателиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ученикиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
             this.печатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.предварительныйпросмотрToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +57,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ученикиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.расписаниеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
@@ -97,7 +98,8 @@
             this.факультативыToolStripMenuItem,
             this.классыToolStripMenuItem,
             this.преподавателиToolStripMenuItem,
-            this.ученикиToolStripMenuItem});
+            this.ученикиToolStripMenuItem,
+            this.расписаниеToolStripMenuItem});
             this.открытьToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("открытьToolStripMenuItem.Image")));
             this.открытьToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.открытьToolStripMenuItem.Name = "открытьToolStripMenuItem";
@@ -139,6 +141,13 @@
             this.преподавателиToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.преподавателиToolStripMenuItem.Text = "Преподаватели";
             this.преподавателиToolStripMenuItem.Click += new System.EventHandler(this.преподавателиToolStripMenuItem_Click);
+            // 
+            // ученикиToolStripMenuItem
+            // 
+            this.ученикиToolStripMenuItem.Name = "ученикиToolStripMenuItem";
+            this.ученикиToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.ученикиToolStripMenuItem.Text = "Ученики";
+            this.ученикиToolStripMenuItem.Click += new System.EventHandler(this.ученикиToolStripMenuItem_Click);
             // 
             // toolStripSeparator
             // 
@@ -234,7 +243,6 @@
             // 
             // toolStripTextBox1
             // 
-            this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.toolStripTextBox1.Name = "toolStripTextBox1";
             this.toolStripTextBox1.Size = new System.Drawing.Size(400, 23);
             // 
@@ -304,12 +312,12 @@
             this.toolStripMenuItem3.Text = "Вст&авить";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.вставкаToolStripMenuItem_Click);
             // 
-            // ученикиToolStripMenuItem
+            // расписаниеToolStripMenuItem
             // 
-            this.ученикиToolStripMenuItem.Name = "ученикиToolStripMenuItem";
-            this.ученикиToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.ученикиToolStripMenuItem.Text = "Ученики";
-            this.ученикиToolStripMenuItem.Click += new System.EventHandler(this.ученикиToolStripMenuItem_Click);
+            this.расписаниеToolStripMenuItem.Name = "расписаниеToolStripMenuItem";
+            this.расписаниеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.расписаниеToolStripMenuItem.Text = "Расписание";
+            this.расписаниеToolStripMenuItem.Click += new System.EventHandler(this.расписаниеToolStripMenuItem_Click);
             // 
             // AdminWin
             // 
@@ -361,6 +369,7 @@
         private System.Windows.Forms.ToolStripMenuItem классыToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem преподавателиToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ученикиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem расписаниеToolStripMenuItem;
     }
 }
 

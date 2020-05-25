@@ -84,6 +84,12 @@ namespace elDnevnik
             Load_Table();
         }
 
+        private void расписаниеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            identify = "raspisanie";
+            Load_Table();
+        }
+
         private void вставкаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Insert_String();
@@ -146,6 +152,15 @@ namespace elDnevnik
                 ucheniki.AcceptButton = ucheniki.button1;
                 ucheniki.Ucheniki_Closed += ученикиToolStripMenuItem_Click;
                 ucheniki.Show();
+            }
+            if (identify == "raspisanie")
+            {
+                Raspisanie raspisanie = new Raspisanie(MySqlQueries, MySqlOperations);
+                raspisanie.button1.Visible = true;
+                raspisanie.button3.Visible = false;
+                raspisanie.AcceptButton = raspisanie.button1;
+                raspisanie.Raspisanie_Closed += расписаниеToolStripMenuItem_Click;
+                raspisanie.Show();
             }
         }
 
@@ -235,6 +250,20 @@ namespace elDnevnik
                     ucheniki.Ucheniki_Closed += ученикиToolStripMenuItem_Click;
                     ucheniki.Show();
                 }
+                if (identify == "raspisanie")
+                {
+                    Raspisanie raspisanie = new Raspisanie(MySqlQueries, MySqlOperations, row.Cells[0].Value.ToString());
+                    MySqlOperations.Search_In_ComboBox(row.Cells[1].Value.ToString(), raspisanie.comboBox1);
+                    MySqlOperations.Search_In_ComboBox(row.Cells[2].Value.ToString(), raspisanie.comboBox2);
+                    raspisanie.groupBox1.Visible = true;
+                    MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uroki, raspisanie.dataGridView1, row.Cells[0].Value.ToString());
+                    raspisanie.dataGridView1.Columns[0].Visible = false;
+                    raspisanie.button3.Visible = true;
+                    raspisanie.button1.Visible = false;
+                    raspisanie.AcceptButton = raspisanie.button3;
+                    raspisanie.Raspisanie_Closed += расписаниеToolStripMenuItem_Click;
+                    raspisanie.Show();
+                }
             }
         }
 
@@ -291,6 +320,12 @@ namespace elDnevnik
                 dataGridView1.Columns[0].Visible = false;
                 dataGridView1.ClearSelection();
             }
+            if (identify == "raspisanie")
+            {
+                MySqlOperations.Select_DataGridView(MySqlQueries.Select_Raspisanie, dataGridView1);
+                dataGridView1.Columns[0].Visible = false;
+                dataGridView1.ClearSelection();
+            }
         }
 
         private void Delete_String()
@@ -309,6 +344,8 @@ namespace elDnevnik
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Prepod, row.Cells[0].Value.ToString());
                 if (identify == "ucheniki")
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Ucheniki, row.Cells[0].Value.ToString());
+                if (identify == "raspisanie")
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Raspisanie, row.Cells[0].Value.ToString());
             }
         }
     }
