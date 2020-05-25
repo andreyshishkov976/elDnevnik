@@ -156,8 +156,8 @@ namespace elDnevnik
             if (identify == "raspisanie")
             {
                 Raspisanie raspisanie = new Raspisanie(MySqlQueries, MySqlOperations);
-                raspisanie.button1.Visible = true;
-                raspisanie.button3.Visible = false;
+                raspisanie.button4.Visible = true;
+                raspisanie.button5.Visible = false;
                 raspisanie.AcceptButton = raspisanie.button1;
                 raspisanie.Raspisanie_Closed += расписаниеToolStripMenuItem_Click;
                 raspisanie.Show();
@@ -258,8 +258,8 @@ namespace elDnevnik
                     raspisanie.groupBox1.Visible = true;
                     MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uroki, raspisanie.dataGridView1, row.Cells[0].Value.ToString());
                     raspisanie.dataGridView1.Columns[0].Visible = false;
-                    raspisanie.button3.Visible = true;
-                    raspisanie.button1.Visible = false;
+                    raspisanie.button5.Visible = true;
+                    raspisanie.button4.Visible = false;
                     raspisanie.AcceptButton = raspisanie.button3;
                     raspisanie.Raspisanie_Closed += расписаниеToolStripMenuItem_Click;
                     raspisanie.Show();

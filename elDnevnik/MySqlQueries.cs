@@ -8,6 +8,12 @@ namespace elDnevnik
 {
     public class MySqlQueries
     {
+        //Exists
+        public string Exists_Uroki = $@"SELECT EXISTS(SELECT * FROM uroki WHERE id_raspisaniya = @Value1 AND poradok = @Value2);";
+
+        public string Exists_Raspisanie = $@"SELECT EXISTS(SELECT * FROM raspisanie WHERE id_klassa = @Value1 AND den_nedeli = @Value2);";
+        //Exists
+
         //Select
         public string Select_Last_ID = $@"SELECT LAST_INSERT_ID();";
 
