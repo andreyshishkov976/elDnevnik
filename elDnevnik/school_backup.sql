@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Хост:                         127.0.0.1
--- Версия сервера:               10.4.11-MariaDB - mariadb.org binary distribution
+-- Версия сервера:               10.3.16-MariaDB - mariadb.org binary distribution
 -- Операционная система:         Win64
 -- HeidiSQL Версия:              11.0.0.5919
 -- --------------------------------------------------------
@@ -21,12 +21,20 @@ CREATE TABLE IF NOT EXISTS `auditorii` (
   `id_auditorii` int(11) NOT NULL AUTO_INCREMENT,
   `nom_auditorii` varchar(5) NOT NULL,
   PRIMARY KEY (`id_auditorii`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
--- Дамп данных таблицы school.auditorii: ~1 rows (приблизительно)
+-- Дамп данных таблицы school.auditorii: ~9 rows (приблизительно)
 /*!40000 ALTER TABLE `auditorii` DISABLE KEYS */;
 INSERT IGNORE INTO `auditorii` (`id_auditorii`, `nom_auditorii`) VALUES
-	(1, '3-2');
+	(1, '1-1'),
+	(2, '1-2'),
+	(3, '1-3'),
+	(4, '1-4'),
+	(5, '1-5'),
+	(6, '1-6'),
+	(7, '1-7'),
+	(8, '2-1'),
+	(9, '2-2');
 /*!40000 ALTER TABLE `auditorii` ENABLE KEYS */;
 
 -- Дамп структуры для таблица school.fakultativy
@@ -47,7 +55,7 @@ CREATE TABLE IF NOT EXISTS `fakultativy` (
   CONSTRAINT `fakultativy_ibfk_3` FOREIGN KEY (`id_prepod`) REFERENCES `prepod` (`id_prepod`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Факультативные занятия';
 
--- Дамп данных таблицы school.fakultativy: ~1 rows (приблизительно)
+-- Дамп данных таблицы school.fakultativy: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `fakultativy` DISABLE KEYS */;
 INSERT IGNORE INTO `fakultativy` (`id_fakultativa`, `id_predmeta`, `id_prepod`, `date_provedeniya`, `id_auditorii`, `time_n`, `time_k`) VALUES
 	(2, 1, 1, '2020-03-02', 1, '19:35:00', '20:35:00');
@@ -74,12 +82,15 @@ CREATE TABLE IF NOT EXISTS `klassy` (
   `parallel` varchar(1) NOT NULL,
   `kolvo_uch` int(2) NOT NULL,
   PRIMARY KEY (`id_klassa`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Справочник классов';
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Справочник классов';
 
--- Дамп данных таблицы school.klassy: ~1 rows (приблизительно)
+-- Дамп данных таблицы school.klassy: ~3 rows (приблизительно)
 /*!40000 ALTER TABLE `klassy` DISABLE KEYS */;
 INSERT IGNORE INTO `klassy` (`id_klassa`, `nom_klassa`, `parallel`, `kolvo_uch`) VALUES
-	(1, 2, 'А', 20);
+	(1, 2, 'А', 20),
+	(2, 1, 'А', 20),
+	(3, 1, 'Б', 20),
+	(4, 2, 'Б', 20);
 /*!40000 ALTER TABLE `klassy` ENABLE KEYS */;
 
 -- Дамп структуры для таблица school.otmetki
@@ -104,12 +115,18 @@ CREATE TABLE IF NOT EXISTS `predmety` (
   `id_predmeta` int(11) NOT NULL AUTO_INCREMENT,
   `naimenovanie` varchar(150) NOT NULL,
   PRIMARY KEY (`id_predmeta`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Справочник предметов';
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COMMENT='Справочник предметов';
 
--- Дамп данных таблицы school.predmety: ~1 rows (приблизительно)
+-- Дамп данных таблицы school.predmety: ~7 rows (приблизительно)
 /*!40000 ALTER TABLE `predmety` DISABLE KEYS */;
 INSERT IGNORE INTO `predmety` (`id_predmeta`, `naimenovanie`) VALUES
-	(1, 'Русский язык');
+	(1, 'Русский язык'),
+	(2, 'Математика'),
+	(3, 'Беларусский язык'),
+	(4, 'Физика'),
+	(5, 'Информатика'),
+	(6, 'История Беларуси'),
+	(7, 'Всемирная история');
 /*!40000 ALTER TABLE `predmety` ENABLE KEYS */;
 
 -- Дамп структуры для таблица school.prepod
@@ -126,7 +143,7 @@ CREATE TABLE IF NOT EXISTS `prepod` (
   CONSTRAINT `prepod_ibfk_1` FOREIGN KEY (`id_predmeta`) REFERENCES `predmety` (`id_predmeta`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Справочник преподавателей';
 
--- Дамп данных таблицы school.prepod: ~1 rows (приблизительно)
+-- Дамп данных таблицы school.prepod: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `prepod` DISABLE KEYS */;
 INSERT IGNORE INTO `prepod` (`id_prepod`, `familiya`, `imya`, `otchestvo`, `id_predmeta`, `login`, `parol`) VALUES
 	(1, 'Петров', 'Иван', 'Васильевич', 1, '14881337', 'petrov1337');
@@ -140,13 +157,14 @@ CREATE TABLE IF NOT EXISTS `raspisanie` (
   PRIMARY KEY (`id_raspisaniya`),
   KEY `id_klassa` (`id_klassa`),
   CONSTRAINT `raspisanie_ibfk_1` FOREIGN KEY (`id_klassa`) REFERENCES `klassy` (`id_klassa`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='Расписание уроков';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='Расписание уроков';
 
 -- Дамп данных таблицы school.raspisanie: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `raspisanie` DISABLE KEYS */;
 INSERT IGNORE INTO `raspisanie` (`id_raspisaniya`, `id_klassa`, `den_nedeli`) VALUES
 	(1, 1, 'Вторник'),
-	(2, 1, 'Понедельник');
+	(2, 2, 'Понедельник'),
+	(3, 2, 'Вторник');
 /*!40000 ALTER TABLE `raspisanie` ENABLE KEYS */;
 
 -- Дамп структуры для таблица school.ucheniki
@@ -163,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `ucheniki` (
   CONSTRAINT `ucheniki_ibfk_1` FOREIGN KEY (`id_klassa`) REFERENCES `klassy` (`id_klassa`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Справочник учащихся';
 
--- Дамп данных таблицы school.ucheniki: ~1 rows (приблизительно)
+-- Дамп данных таблицы school.ucheniki: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `ucheniki` DISABLE KEYS */;
 INSERT IGNORE INTO `ucheniki` (`id_uchenika`, `familiya`, `imya`, `otchestvo`, `id_klassa`, `login`, `parol`) VALUES
 	(1, 'Сидорова', 'Александра', 'Емельяновна', 1, 'emelya123', 'sid2em');
@@ -183,12 +201,14 @@ CREATE TABLE IF NOT EXISTS `uroki` (
   CONSTRAINT `uroki_ibfk_1` FOREIGN KEY (`id_raspisaniya`) REFERENCES `raspisanie` (`id_raspisaniya`),
   CONSTRAINT `uroki_ibfk_2` FOREIGN KEY (`id_predmeta`) REFERENCES `predmety` (`id_predmeta`),
   CONSTRAINT `uroki_ibfk_3` FOREIGN KEY (`id_auditorii`) REFERENCES `auditorii` (`id_auditorii`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='Уроки';
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='Уроки';
 
--- Дамп данных таблицы school.uroki: ~1 rows (приблизительно)
+-- Дамп данных таблицы school.uroki: ~3 rows (приблизительно)
 /*!40000 ALTER TABLE `uroki` DISABLE KEYS */;
 INSERT IGNORE INTO `uroki` (`id_uroka`, `id_raspisaniya`, `id_predmeta`, `id_auditorii`, `poradok`) VALUES
-	(1, 1, 1, 1, '1-й урок');
+	(1, 1, 1, 4, '1-й урок'),
+	(8, 1, 2, 4, '2-й урок'),
+	(9, 1, 3, 4, '3-й урок');
 /*!40000 ALTER TABLE `uroki` ENABLE KEYS */;
 
 -- Дамп структуры для таблица school.zanyatiya
