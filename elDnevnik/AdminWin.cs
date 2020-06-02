@@ -256,7 +256,7 @@ namespace elDnevnik
                     MySqlOperations.Search_In_ComboBox(row.Cells[1].Value.ToString(), raspisanie.comboBox1);
                     MySqlOperations.Search_In_ComboBox(row.Cells[2].Value.ToString(), raspisanie.comboBox2);
                     raspisanie.groupBox1.Visible = true;
-                    MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uroki, raspisanie.dataGridView1, row.Cells[0].Value.ToString());
+                    MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uroki_Raspisaniya, raspisanie.dataGridView1, row.Cells[0].Value.ToString());
                     raspisanie.dataGridView1.Columns[0].Visible = false;
                     raspisanie.button5.Visible = true;
                     raspisanie.button4.Visible = false;

@@ -19,6 +19,8 @@ namespace elDnevnik
 
         public string Exists_Predmety = $@"SELECT EXISTS(SELECT * FROM predmety WHERE naimenovanie = @Value1);";
 
+        public string Exists_Prepod = $@"SELECT EXISTS(SELECT * FROM prepod WHERE login = @Value1 AND parol = @Value2);";
+
         //Exists
 
         //Select
@@ -56,17 +58,48 @@ FROM prepod INNER JOIN predmety ON prepod.id_predmeta = predmety.id_predmeta;";
 
         public string Select_ID_Prepod_ComboBox = $@"SELECT id_prepod FROM prepod WHERE CONCAT(familiya,' ',imya,' ',otchestvo) = @Value1;";
 
+        public string Select_ID_Prepod = $@"SELECT id_prepod FROM prepod WHERE login = @Value1 AND parol = @Value2;";
+
+        public string Select_FIO_Prepod = $@"SELECT CONCAT(familiya, ' ', imya, ' ', otchestvo) FROM prepod WHERE id_prepod = @ID;";
+
         public string Select_Ucheniki = $@"SELECT id_uchenika, CONCAT(familiya,' ',imya,' ',otchestvo) AS 'Ф.И.О. предователя',
 CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Текущий класс', login AS 'Логин', parol AS 'Пароль'
 FROM ucheniki INNER JOIN klassy ON ucheniki.id_klassa = klassy.id_klassa;";
 
-        public string Select_Raspisanie = $@"SELECT id_raspisaniya, CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Номер класса', den_nedeli AS 'День недели'
-FROM raspisanie INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa;";
+        public string Select_Raspisanie = $@"SELECT raspisanie.id_raspisaniya, CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Номер класса',
+CASE
+WHEN den_nedeli = 0 Then 'Понедельник'
+WHEN den_nedeli = 1 Then 'Вторник'
+WHEN den_nedeli = 2 Then 'Среда'
+WHEN den_nedeli = 3 Then 'Четверг'
+WHEN den_nedeli = 4 Then 'Пятница'
+WHEN den_nedeli = 5 Then 'Суббота'
+END AS 'День недели', COUNT(uroki.id_uroka) AS 'Количество уроков'
+FROM raspisanie INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
+INNER JOIN uroki ON raspisanie.id_raspisaniya = uroki.id_raspisaniya
+GROUP BY raspisanie.id_raspisaniya
+ORDER BY den_nedeli;";
 
-        public string Select_Uroki = $@"SELECT id_uroka, predmety.naimenovanie AS 'Наименование предмета', auditorii.nom_auditorii AS 'Номер аудитории', poradok AS 'Урок по порядку'
+        public string Select_Uroki_Raspisaniya = $@"SELECT id_uroka, predmety.naimenovanie AS 'Наименование предмета', auditorii.nom_auditorii AS 'Номер аудитории', poradok AS 'Урок по порядку'
 FROM uroki INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
 INNER JOIN auditorii ON uroki.id_auditorii = auditorii.id_auditorii
 WHERE id_raspisaniya = @ID;";
+
+        public string Select_Uroki_Uchenika = $@"SELECT uroki.poradok AS 'Урок п/п', predmety.naimenovanie AS 'Предмет', auditorii.nom_auditorii AS 'Аудитория'
+FROM uroki INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
+INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
+INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
+INNER JOIN auditorii ON uroki.id_auditorii = auditorii.id_auditorii
+WHERE klassy.id_klassa = @Value1 AND raspisanie.den_nedeli = @Value2;";
+
+        public string Select_Uroki_Prepoda = $@"SELECT CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Класс', uroki.poradok AS 'Урок п/п', predmety.naimenovanie AS 'Предмет', auditorii.nom_auditorii AS 'Аудитория'
+FROM uroki INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
+INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
+INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
+INNER JOIN auditorii ON uroki.id_auditorii = auditorii.id_auditorii
+INNER JOIN prepod ON predmety.id_predmeta = prepod.id_predmeta
+WHERE prepod.id_prepod = @ID AND raspisanie.den_nedeli = @Value1
+ORDER BY uroki.poradok ASC;";
         //Select
 
         //Insert

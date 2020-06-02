@@ -79,7 +79,7 @@
             "Вторник",
             "Среда",
             "Четверг",
-            "Пятницы",
+            "Пятница",
             "Суббота"});
             this.comboBox2.Location = new System.Drawing.Point(489, 1);
             this.comboBox2.Name = "comboBox2";
@@ -226,6 +226,7 @@
             // 
             // button3
             // 
+            this.button3.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.button3.Location = new System.Drawing.Point(368, 35);
             this.button3.Name = "button3";
@@ -233,6 +234,7 @@
             this.button3.TabIndex = 14;
             this.button3.Text = "Отмена";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
@@ -262,6 +264,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.CancelButton = this.button3;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.groupBox1);

@@ -32,12 +32,12 @@
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.button3 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.button3 = new System.Windows.Forms.Button();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.linkLabel2 = new System.Windows.Forms.LinkLabel();
             this.button4 = new System.Windows.Forms.Button();
@@ -96,25 +96,29 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(332, 181);
             this.panel1.TabIndex = 3;
+            this.panel1.Visible = false;
             // 
-            // label2
+            // linkLabel1
             // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label2.Location = new System.Drawing.Point(7, 18);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(59, 20);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Логин:";
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(10, 156);
+            this.linkLabel1.Margin = new System.Windows.Forms.Padding(10);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(113, 13);
+            this.linkLabel1.TabIndex = 5;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "Зарегистрироваться";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // textBox1
+            // button3
             // 
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.textBox1.Location = new System.Drawing.Point(96, 15);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(15);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(219, 26);
-            this.textBox1.TabIndex = 1;
+            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.button3.Location = new System.Drawing.Point(105, 115);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(111, 28);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "Войти";
+            this.button3.UseVisualStyleBackColor = true;
             // 
             // textBox2
             // 
@@ -135,27 +139,24 @@
             this.label3.TabIndex = 2;
             this.label3.Text = "Пароль:";
             // 
-            // button3
+            // textBox1
             // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.button3.Location = new System.Drawing.Point(105, 115);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(111, 28);
-            this.button3.TabIndex = 4;
-            this.button3.Text = "Войти";
-            this.button3.UseVisualStyleBackColor = true;
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.textBox1.Location = new System.Drawing.Point(96, 15);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(15);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(219, 26);
+            this.textBox1.TabIndex = 1;
             // 
-            // linkLabel1
+            // label2
             // 
-            this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(10, 156);
-            this.linkLabel1.Margin = new System.Windows.Forms.Padding(10);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(113, 13);
-            this.linkLabel1.TabIndex = 5;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Зарегистрироваться";
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.label2.Location = new System.Drawing.Point(7, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(59, 20);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Логин:";
             // 
             // panel2
             // 
@@ -168,10 +169,11 @@
             this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.textBox4);
             this.panel2.Controls.Add(this.label5);
-            this.panel2.Location = new System.Drawing.Point(59, 246);
+            this.panel2.Location = new System.Drawing.Point(59, 61);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(332, 181);
             this.panel2.TabIndex = 6;
+            this.panel2.Visible = false;
             // 
             // linkLabel2
             // 
@@ -194,15 +196,17 @@
             this.button4.TabIndex = 4;
             this.button4.Text = "Войти";
             this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // textBox3
             // 
             this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.textBox3.Location = new System.Drawing.Point(96, 71);
+            this.textBox3.Location = new System.Drawing.Point(96, 15);
             this.textBox3.Margin = new System.Windows.Forms.Padding(15);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(219, 26);
             this.textBox3.TabIndex = 3;
+            this.textBox3.Text = "14881337";
             // 
             // label4
             // 
@@ -217,11 +221,12 @@
             // textBox4
             // 
             this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.textBox4.Location = new System.Drawing.Point(96, 15);
+            this.textBox4.Location = new System.Drawing.Point(96, 71);
             this.textBox4.Margin = new System.Windows.Forms.Padding(15);
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(219, 26);
             this.textBox4.TabIndex = 1;
+            this.textBox4.Text = "petrov1337";
             // 
             // label5
             // 
@@ -250,6 +255,8 @@
             this.MinimizeBox = false;
             this.Name = "Login";
             this.Text = "Авторизация";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Login_FormClosed);
+            this.Load += new System.EventHandler(this.Login_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
