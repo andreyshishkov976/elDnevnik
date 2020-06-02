@@ -21,6 +21,15 @@ namespace elDnevnik
 
         public string Exists_Prepod = $@"SELECT EXISTS(SELECT * FROM prepod WHERE login = @Value1 AND parol = @Value2);";
 
+        public string Exists_Zanyatiya = $@"SELECT EXISTS(SELECT CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Класс', uroki.poradok AS 'Урок п/п', predmety.naimenovanie AS 'Предмет', auditorii.nom_auditorii AS 'Аудитория'
+FROM uroki INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
+INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
+INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
+INNER JOIN auditorii ON uroki.id_auditorii = auditorii.id_auditorii
+INNER JOIN prepod ON predmety.id_predmeta = prepod.id_predmeta
+WHERE prepod.id_prepod = @ID AND raspisanie.den_nedeli = @Value1
+ORDER BY uroki.poradok ASC);";
+
         //Exists
 
         //Select
