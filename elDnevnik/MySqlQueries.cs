@@ -96,14 +96,14 @@ FROM uroki INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
 INNER JOIN auditorii ON uroki.id_auditorii = auditorii.id_auditorii
 WHERE id_raspisaniya = @ID;";
 
-        public string Select_Uroki_Uchenika = $@"SELECT uroki.poradok AS 'Урок п/п', predmety.naimenovanie AS 'Предмет', auditorii.nom_auditorii AS 'Аудитория'
+        public string Select_Uroki_Uchenika = $@"SELECT uroki.id_uroka, uroki.poradok AS 'Урок п/п', predmety.naimenovanie AS 'Предмет', auditorii.nom_auditorii AS 'Аудитория'
 FROM uroki INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
 INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
 INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
 INNER JOIN auditorii ON uroki.id_auditorii = auditorii.id_auditorii
 WHERE klassy.id_klassa = @Value1 AND raspisanie.den_nedeli = @Value2;";
 
-        public string Select_Uroki_Prepoda = $@"SELECT CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Класс', uroki.poradok AS 'Урок п/п', predmety.naimenovanie AS 'Предмет', auditorii.nom_auditorii AS 'Аудитория'
+        public string Select_Uroki_Prepoda = $@"SELECT uroki.id_uroka, CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Класс', uroki.poradok AS 'Урок п/п', predmety.naimenovanie AS 'Предмет', auditorii.nom_auditorii AS 'Аудитория'
 FROM uroki INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
 INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
 INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
@@ -111,6 +111,31 @@ INNER JOIN auditorii ON uroki.id_auditorii = auditorii.id_auditorii
 INNER JOIN prepod ON predmety.id_predmeta = prepod.id_predmeta
 WHERE prepod.id_prepod = @ID AND raspisanie.den_nedeli = @Value1
 ORDER BY uroki.poradok ASC;";
+
+        public string Select_Zanyatiya = $@"SELECT zanyatiya.id_zanyatiya, zanyatiya.date AS 'Дата', 
+CASE
+WHEN den_nedeli = 0 Then 'Понедельник'
+WHEN den_nedeli = 1 Then 'Вторник'
+WHEN den_nedeli = 2 Then 'Среда'
+WHEN den_nedeli = 3 Then 'Четверг'
+WHEN den_nedeli = 4 Then 'Пятница'
+WHEN den_nedeli = 5 Then 'Суббота'
+END AS 'День недели', 
+uroki.poradok AS 'Урок п/п', auditorii.nom_auditorii AS 'Номер аудитории', 
+CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Номер класса'
+FROM zanyatiya INNER JOIN uroki ON zanyatiya.id_uroka = uroki.id_uroka
+INNER JOIN auditorii ON uroki.id_auditorii = auditorii.id_auditorii
+INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
+INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
+WHERE zanyatiya.id_prepod = @ID;";
+
+        public string Select_ID_Ucheniki_Klassa = $@"SELECT ucheniki.id_uchenika FROM ucheniki
+INNER JOIN klassy ON ucheniki.id_klassa = klassy.id_klassa
+WHERE CONCAT(klassy.nom_klassa, ' ', klassy.parallel) = @Value1;";
+
+        public string Select_Otmetki_Zanyatiya = $@"SELECT otmetki.id_otmetki, CONCAT(ucheniki.familiya, ' ', ucheniki.imya, ' ', ucheniki.otchestvo) AS 'Ф.И.О. ученика', otmetki.znachenie AS 'Отметка'
+FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
+WHERE otmetki.id_zanyatiya = @ID;";
         //Select
 
         //Insert
@@ -129,6 +154,10 @@ ORDER BY uroki.poradok ASC;";
         public string Insert_Raspisanie = $@"INSERT INTO raspisanie (id_klassa, den_nedeli) VALUES (@Value1, @Value2);";
 
         public string Insert_Uroki = $@"INSERT INTO uroki (id_raspisaniya, id_predmeta, id_auditorii, poradok) VALUES (@Value1, @Value2, @Value3, @Value4);";
+
+        public string Insert_Zanyatiya = $@"INSERT INTO zanyatiya (id_uroka, date, id_prepod) VALUES (@Value1, @Value2, @Value3);";
+
+        public string Insert_Otmetki = $@"INSERT INTO otmetki (id_uchenika, id_zanyatiya, znachenie) VALUES (@Value1, @Value2, @Value3);";
         //Insert
 
         //Update
@@ -165,6 +194,8 @@ ORDER BY uroki.poradok ASC;";
         public string Delete_Raspisanie = $@"DELETE FROM raspisanie WHERE id_raspisaniya = @ID;";
         
         public string Delete_Uroki = $@"DELETE FROM uroki WHERE id_uroka = @ID;";
+
+        public string Delete_Zanyatiya = $@"DELETE FROM zanyatiya WHERE id_zanyatiya = @ID;";
         //Delete
     }
 }

@@ -12,9 +12,24 @@ namespace elDnevnik
 {
     public partial class Zanyatiya : Form
     {
-        public Zanyatiya()
+        MySqlQueries MySqlQueries = null;
+        MySqlOperations MySqlOperations = null;
+        string ID = null;
+
+        public Zanyatiya(MySqlQueries mySqlQueries, MySqlOperations mySqlOperations, string iD)
         {
             InitializeComponent();
+            MySqlQueries = mySqlQueries;
+            MySqlOperations = mySqlOperations;
+            ID = iD;
+            MySqlOperations.Select_DataGridView(MySqlQueries.Select_Otmetki_Zanyatiya, dataGridView1, ID);
+            dataGridView1.Columns[0].Visible = false;
+            dataGridView1.Columns[1].ReadOnly = true;
         }
+        private void Zanyatiya_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Zanyatiya_Closed(this, EventArgs.Empty);
+        }
+        public event EventHandler Zanyatiya_Closed;
     }
 }

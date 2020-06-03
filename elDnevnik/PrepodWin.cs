@@ -17,6 +17,7 @@ namespace elDnevnik
         MySqlOperations MySqlOperations = null;
         string ID_Prepoda = null;
         string DayOfWeek = null;
+        bool Exists = false;
 
         public PrepodWin(string ID)
         {
@@ -37,10 +38,10 @@ namespace elDnevnik
             DayOfWeek = DayOfWeek.Substring(0, 1).ToUpper() + DayOfWeek.Remove(0, 1).ToLower();
             ConvertDayToIndex();
             LockDown_DataGrids();
-            //if (MySqlOperations.Select_Text(MySqlQueries.Exists_Zanyatiya, ID_Prepoda, DayOfWeek) == "1")
-            //{
-            //    MessageBox.Show("Есть уроки");
-            //}
+            if (MySqlOperations.Select_Text(MySqlQueries.Exists_Zanyatiya, ID_Prepoda, DayOfWeek) == "1")
+                Exists = true;
+            else
+                Exists = false;
         }
 
         private void ConvertDayToIndex()
@@ -78,17 +79,26 @@ namespace elDnevnik
         private void Load_Raspisanie(string ID)
         {
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uroki_Prepoda, dataGridView2, ID, "0");
+            dataGridView2.Columns[0].Visible = false;
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uroki_Prepoda, dataGridView3, ID, "1");
+            dataGridView3.Columns[0].Visible = false;
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uroki_Prepoda, dataGridView4, ID, "2");
+            dataGridView4.Columns[0].Visible = false;
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uroki_Prepoda, dataGridView5, ID, "3");
+            dataGridView5.Columns[0].Visible = false;
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uroki_Prepoda, dataGridView6, ID, "4");
+            dataGridView6.Columns[0].Visible = false;
             MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uroki_Prepoda, dataGridView7, ID, "5");
+            dataGridView7.Columns[0].Visible = false;
+            MySqlOperations.Select_DataGridView(MySqlQueries.Select_Zanyatiya, dataGridView9, ID);
+            dataGridView9.Columns[0].Visible = false;
             dataGridView2.ClearSelection();
             dataGridView3.ClearSelection();
             dataGridView4.ClearSelection();
             dataGridView5.ClearSelection();
             dataGridView6.ClearSelection();
             dataGridView7.ClearSelection();
+            dataGridView9.ClearSelection();
         }
 
         private void PrepodWin_FormClosed(object sender, FormClosedEventArgs e)
@@ -96,9 +106,40 @@ namespace elDnevnik
             MySqlOperations.CloseConnection();
         }
 
-        private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        private void Load_Zanyatiya(object sender, EventArgs e)
         {
-            MessageBox.Show("Хотите заполнить занятие?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            MySqlOperations.Select_DataGridView(MySqlQueries.Select_Zanyatiya, dataGridView9, ID_Prepoda);
+            dataGridView9.Columns[0].Visible = false;
         }
+
+        private void Insert_Zanyatiya(DataGridView dataGridView)
+        {
+            if (Exists == true)
+                if (MessageBox.Show("Хотите заполнить занятие?", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    string date = DateTime.Now.Year.ToString() + '-' + DateTime.Now.Month.ToString() + '-' + DateTime.Now.Day.ToString();
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Zanyatiya, null, dataGridView.SelectedRows[0].Cells[0].Value.ToString(), date, ID_Prepoda);
+                    string ID = MySqlOperations.Select_Text(MySqlQueries.Select_Last_ID);
+                    DataTable dataTable = MySqlOperations.Select_DataTable(MySqlQueries.Select_ID_Ucheniki_Klassa, null, dataGridView.SelectedRows[0].Cells[1].Value.ToString());
+                    foreach (DataRow row in dataTable.Rows)
+                        MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Otmetki,null, row[0].ToString(),ID, null);
+                    Zanyatiya zanyatiya = new Zanyatiya(MySqlQueries, MySqlOperations, ID);
+                    zanyatiya.Text += ID;
+                    zanyatiya.Zanyatiya_Closed += Load_Zanyatiya;
+                    zanyatiya.Show();
+                }
+        }
+
+        private void dataGridView2_CellDoubleClick(object sender, DataGridViewCellEventArgs e) => Insert_Zanyatiya(dataGridView2);
+
+        private void dataGridView3_CellDoubleClick(object sender, DataGridViewCellEventArgs e) => Insert_Zanyatiya(dataGridView3);
+
+        private void dataGridView4_CellDoubleClick(object sender, DataGridViewCellEventArgs e) => Insert_Zanyatiya(dataGridView4);
+
+        private void dataGridView5_CellDoubleClick(object sender, DataGridViewCellEventArgs e) => Insert_Zanyatiya(dataGridView5);
+
+        private void dataGridView6_CellDoubleClick(object sender, DataGridViewCellEventArgs e) => Insert_Zanyatiya(dataGridView6);
+
+        private void dataGridView7_CellDoubleClick(object sender, DataGridViewCellEventArgs e) => Insert_Zanyatiya(dataGridView7);
     }
 }
