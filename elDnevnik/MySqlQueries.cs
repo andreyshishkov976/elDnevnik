@@ -21,6 +21,8 @@ namespace elDnevnik
 
         public string Exists_Prepod = $@"SELECT EXISTS(SELECT * FROM prepod WHERE login = @Value1 AND parol = @Value2);";
 
+        public string Exists_Ucheniki = $@"SELECT EXISTS(SELECT * FROM ucheniki WHERE login = @Value1 AND parol = @Value2);";
+
         public string Exists_Zanyatiya = $@"SELECT EXISTS(SELECT CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Класс', uroki.poradok AS 'Урок п/п', predmety.naimenovanie AS 'Предмет', auditorii.nom_auditorii AS 'Аудитория'
 FROM uroki INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
 INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
@@ -71,7 +73,7 @@ FROM prepod INNER JOIN predmety ON prepod.id_predmeta = predmety.id_predmeta;";
 
         public string Select_FIO_Prepod = $@"SELECT CONCAT(familiya, ' ', imya, ' ', otchestvo) FROM prepod WHERE id_prepod = @ID;";
 
-        public string Select_Ucheniki = $@"SELECT id_uchenika, CONCAT(familiya,' ',imya,' ',otchestvo) AS 'Ф.И.О. предователя',
+        public string Select_Ucheniki = $@"SELECT id_uchenika, CONCAT(familiya,' ',imya,' ',otchestvo) AS 'Ф.И.О. ученика',
 CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Текущий класс', login AS 'Логин', parol AS 'Пароль'
 FROM ucheniki INNER JOIN klassy ON ucheniki.id_klassa = klassy.id_klassa;";
 

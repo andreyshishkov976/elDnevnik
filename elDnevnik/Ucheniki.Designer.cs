@@ -159,7 +159,7 @@
             // textBox4
             // 
             this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.textBox4.Location = new System.Drawing.Point(232, 162);
+            this.textBox4.Location = new System.Drawing.Point(232, 130);
             this.textBox4.MaxLength = 18;
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(222, 26);
@@ -178,7 +178,7 @@
             // textBox5
             // 
             this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.textBox5.Location = new System.Drawing.Point(232, 130);
+            this.textBox5.Location = new System.Drawing.Point(232, 162);
             this.textBox5.MaxLength = 18;
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(222, 26);

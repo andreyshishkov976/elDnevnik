@@ -28,14 +28,15 @@ namespace elDnevnik
         private void button1_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "" && textBox4.Text != "" && textBox5.Text != "")
-            {
-                MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Prepod, null, textBox1.Text, textBox2.Text, textBox3.Text, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Predmety_ComboBox, null, comboBox1.Text), textBox4.Text, textBox5.Text);
-                this.Close();
-            }
+                if (MySqlOperations.Select_Text(MySqlQueries.Exists_Prepod, null, textBox4.Text, textBox5.Text) != "1")
+                {
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Prepod, null, textBox1.Text, textBox2.Text, textBox3.Text, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Predmety_ComboBox, null, comboBox1.Text), textBox4.Text, textBox5.Text);
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("Введенный вами Логин и(или) Пароль уже заняты.", "Предупреждение",MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
-            {
                 MessageBox.Show("Поля не заполнены.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -46,14 +47,15 @@ namespace elDnevnik
         private void button3_Click(object sender, EventArgs e)
         {
             if (textBox1.Text != "" && textBox2.Text != "" && textBox3.Text != "" && textBox4.Text != "" && textBox5.Text != "")
-            {
-                MySqlOperations.Insert_Update_Delete(MySqlQueries.Update_Prepod, ID, textBox1.Text, textBox2.Text, textBox3.Text, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Predmety_ComboBox, null, comboBox1.Text), textBox4.Text, textBox5.Text);
-                this.Close();
-            }
+                if (MySqlOperations.Select_Text(MySqlQueries.Exists_Prepod, null, textBox4.Text, textBox5.Text) != "1")
+                {
+                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Update_Prepod, ID, textBox1.Text, textBox2.Text, textBox3.Text, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Predmety_ComboBox, null, comboBox1.Text), textBox4.Text, textBox5.Text);
+                    this.Close();
+                }
+                else
+                    MessageBox.Show("Введенный вами Логин и(или) Пароль уже заняты.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             else
-            {
                 MessageBox.Show("Поля не заполнены.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
         }
 
         private void Prepod_FormClosed(object sender, FormClosedEventArgs e)
