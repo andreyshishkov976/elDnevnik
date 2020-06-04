@@ -342,5 +342,15 @@ namespace elDnevnik
                     dataGridView10.ClearSelection();
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            MySqlOperations.Print_Jurnal(comboBox1.Text, dateTimePicker1, ID_Prepoda, saveFileDialog1);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            MySqlOperations.Print_Uspevaemost(comboBox4.Text, dateTimePicker2, ID_Prepoda, saveFileDialog1);
+        }
     }
 }
