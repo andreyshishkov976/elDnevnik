@@ -197,11 +197,12 @@ namespace elDnevnik
                 {
                     Fakultativy fakultativy = new Fakultativy(MySqlQueries, MySqlOperations, row.Cells[0].Value.ToString());
                     MySqlOperations.Search_In_ComboBox(row.Cells[1].Value.ToString(), fakultativy.comboBox1);
-                    fakultativy.dateTimePicker1.Value = DateTime.Parse(row.Cells[3].Value.ToString());
+                    fakultativy.dateTimePicker1.Value = DateTime.Parse(row.Cells[2].Value.ToString());
                     fakultativy.dateTimePicker1.MinDate = fakultativy.dateTimePicker1.Value;
                     MySqlOperations.Search_In_ComboBox(row.Cells[3].Value.ToString(), fakultativy.comboBox2);
-                    fakultativy.dateTimePicker2.Value = DateTime.Parse(row.Cells[4].Value.ToString());
-                    fakultativy.dateTimePicker3.Value = DateTime.Parse(row.Cells[5].Value.ToString());
+                    MySqlOperations.Search_In_ComboBox(row.Cells[4].Value.ToString(), fakultativy.comboBox3);
+                    fakultativy.dateTimePicker2.Value = DateTime.Parse(row.Cells[5].Value.ToString());
+                    fakultativy.dateTimePicker3.Value = DateTime.Parse(row.Cells[6].Value.ToString());
                     fakultativy.button3.Visible = true;
                     fakultativy.button1.Visible = false;
                     fakultativy.AcceptButton = fakultativy.button3;

@@ -34,7 +34,7 @@ namespace elDnevnik
         {
             if (MySqlOperations.Select_Text(MySqlQueries.Exists_Raspisanie, null, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text), comboBox2.Text) == "0")
             {
-                MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Raspisanie, null, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text), comboBox2.SelectedIndex.ToString());
+                MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Raspisanie, null, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text), comboBox2.Text);
                 ID = MySqlOperations.Select_Text(MySqlQueries.Select_Last_ID);
                 button4.Enabled = false;
                 button3.Text = "Закрыть";
@@ -50,7 +50,7 @@ namespace elDnevnik
 
         private void button5_Click(object sender, EventArgs e)
         {
-            if (MySqlOperations.Select_Text(MySqlQueries.Exists_Raspisanie, null, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text), comboBox2.SelectedIndex.ToString()) == "0")
+            if (MySqlOperations.Select_Text(MySqlQueries.Exists_Raspisanie, null, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text), comboBox2.Text) == "0")
             {
                 MySqlOperations.Insert_Update_Delete(MySqlQueries.Update_Raspisanie, ID, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text), comboBox2.Text);
                 button3.Text = "Закрыть";
