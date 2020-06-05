@@ -55,6 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="UchenikWin.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UchenikWin.Designer.cs">
+      <DependentUpon>UchenikWin.cs</DependentUpon>
+    </Compile>
     <Compile Include="PrepodWin.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -125,6 +131,9 @@
     <Compile Include="Zanyatiya.Designer.cs">
       <DependentUpon>Zanyatiya.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="UchenikWin.resx">
+      <DependentUpon>UchenikWin.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="PrepodWin.resx">
       <DependentUpon>PrepodWin.cs</DependentUpon>
     </EmbeddedResource>

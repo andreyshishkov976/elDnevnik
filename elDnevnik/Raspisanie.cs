@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Word;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -124,6 +125,15 @@ namespace elDnevnik
         private void button3_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void Raspisanie_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (dataGridView1.Rows.Count < 1)
+            {
+                MessageBox.Show("Блок " + '"' + "Уроки" + '"' + " не заполнен.", "Предупреждение", MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                e.Cancel = true;
+            }
         }
     }
 }

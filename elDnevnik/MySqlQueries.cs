@@ -23,7 +23,7 @@ namespace elDnevnik
 
         public string Exists_Ucheniki = $@"SELECT EXISTS(SELECT * FROM ucheniki WHERE login = @Value1 AND parol = @Value2);";
 
-        public string Exists_Zanyatiya_Today = $@"SELECT EXISTS(SELECT CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Класс', uroki.poradok AS 'Урок п/п', predmety.naimenovanie AS 'Предмет', auditorii.nom_auditorii AS 'Аудитория'
+        public string Exists_Zanyatiya_Today = $@"SELECT EXISTS(SELECT *
 FROM uroki INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
 INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
 INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
@@ -98,24 +98,41 @@ FROM prepod INNER JOIN predmety ON prepod.id_predmeta = predmety.id_predmeta;";
 CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Текущий класс', login AS 'Логин', parol AS 'Пароль'
 FROM ucheniki INNER JOIN klassy ON ucheniki.id_klassa = klassy.id_klassa;";
 
+        public string Select_ID_Ucheniki = $@"SELECT id_uchenika FROM ucheniki WHERE login = @Value1 AND parol = @Value2;";
+
+        public string Select_FIO_Ucheniki = $@"SELECT CONCAT(familiya, ' ', imya, ' ', otchestvo) FROM ucheniki WHERE id_uchenika = @ID;";
+
+        public string Select_ID_Klassa_Ucheniki = $@"SELECT id_klassa FROM ucheniki WHERE id_uchenika = @ID";
+
         public string Select_Raspisanie = $@"SELECT raspisanie.id_raspisaniya, CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Номер класса',
-raspisanie.den_nedeli = 5 AS 'День недели', COUNT(uroki.id_uroka) AS 'Количество уроков'
+raspisanie.den_nedeli AS 'День недели', COUNT(uroki.id_uroka) AS 'Количество уроков'
 FROM raspisanie INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
 INNER JOIN uroki ON raspisanie.id_raspisaniya = uroki.id_raspisaniya
 GROUP BY raspisanie.id_raspisaniya
-ORDER BY raspisanie.den_nedeli;";
+ORDER BY CONCAT(klassy.nom_klassa, ' ', klassy.parallel), raspisanie.den_nedeli;";
 
         public string Select_Uroki_Raspisaniya = $@"SELECT id_uroka, predmety.naimenovanie AS 'Наименование предмета', auditorii.nom_auditorii AS 'Номер аудитории', poradok AS 'Урок по порядку'
 FROM uroki INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
 INNER JOIN auditorii ON uroki.id_auditorii = auditorii.id_auditorii
 WHERE id_raspisaniya = @ID;";
 
-        public string Select_Uroki_Uchenika = $@"SELECT uroki.id_uroka, uroki.poradok AS 'Урок п/п', predmety.naimenovanie AS 'Предмет', auditorii.nom_auditorii AS 'Аудитория'
+        public string Select_Uroki_Uchenika = $@"SELECT uroki.id_uroka, uroki.poradok AS 'Урок п/п', 
+predmety.naimenovanie AS 'Предмет', auditorii.nom_auditorii AS 'Аудитория'
 FROM uroki INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
 INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
 INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
 INNER JOIN auditorii ON uroki.id_auditorii = auditorii.id_auditorii
-WHERE klassy.id_klassa = @Value1 AND raspisanie.den_nedeli = @Value2;";
+WHERE klassy.id_klassa = @ID AND raspisanie.den_nedeli = @Value1
+GROUP BY uroki.id_uroka
+ORDER BY uroki.poradok;";
+
+        public string Select_Homework_Uchenika = $@"SELECT predmety.naimenovanie AS 'Предмет', homework.zadanie
+FROM homework 
+INNER JOIN uroki ON homework.id_uroka = uroki.id_uroka
+INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
+INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
+INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
+WHERE klassy.id_klassa = @ID AND homework.date = STR_TO_DATE(@Value1, '%d.%m.%Y');";
 
         public string Select_Uroki_Prepoda = $@"SELECT uroki.id_uroka, CONCAT(klassy.nom_klassa, ' ', klassy.parallel) AS 'Класс', uroki.poradok AS 'Урок п/п', predmety.naimenovanie AS 'Предмет', auditorii.nom_auditorii AS 'Аудитория'
 FROM uroki INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
@@ -147,6 +164,15 @@ INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
 WHERE zanyatiya.id_prepod = @ID AND (zanyatiya.date LIKE @Value1 OR raspisanie.den_nedeli LIKE @Value1 OR uroki.poradok LIKE @Value1 OR CONCAT(klassy.nom_klassa, ' ', klassy.parallel) LIKE @Value1);";
 
         public string Select_ID_Zanyatiya = $@"SELECT id_zanyatiya FROM zanyatiya WHERE id_uroka = @Value1 AND date = @Value2 AND id_prepod = @Value3;";
+
+        public string Select_Urok_Homework = $@"SELECT uroki.id_uroka
+FROM uroki INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
+INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
+INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
+INNER JOIN auditorii ON uroki.id_auditorii = auditorii.id_auditorii
+INNER JOIN prepod ON predmety.id_predmeta = prepod.id_predmeta
+WHERE prepod.id_prepod = @ID AND raspisanie.den_nedeli = @Value1 AND klassy.id_klassa = @Value2
+ORDER BY uroki.poradok ASC;";
 
         public string Select_Homework = $@"SELECT zadanie FROM homework WHERE id_homework = @ID;";
 
@@ -193,7 +219,8 @@ WHERE otmetki.id_zanyatiya = @ID;";
 		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 28 THEN otmetki.znachenie ELSE null END AS '28',
 		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 29 THEN otmetki.znachenie ELSE NULL END AS '29',
 		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 30 THEN otmetki.znachenie ELSE null END AS '30',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 31 THEN otmetki.znachenie ELSE null END AS '31'
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 31 THEN otmetki.znachenie ELSE null END AS '31',
+        AVG(otmetki.znachenie) AS 'Средний балл'
 FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
 INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
 INNER JOIN prepod ON zanyatiya.id_prepod = prepod.id_prepod
@@ -201,18 +228,57 @@ WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND prepod.id_prepod = @Val
 GROUP BY CONCAT(ucheniki.familiya,' ',ucheniki.imya,' ',ucheniki.otchestvo)
 ORDER BY CONCAT(ucheniki.familiya,' ',ucheniki.imya,' ',ucheniki.otchestvo);";
 
-        public string Select_Uspevaemost_Klassa = $@"SELECT CONCAT(ucheniki.familiya,' ',ucheniki.imya,' ',ucheniki.otchestvo) AS 'Ф.И.О. ученика', AVG(otmetki.znachenie) AS 'Средний балл'
+        public string Select_Uspevaemost_Uchenika = $@"SELECT 
+        predmety.naimenovanie AS 'Предмет',
+  		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 01 THEN otmetki.znachenie ELSE null END AS '01',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 02 THEN otmetki.znachenie ELSE null END AS '02',
+        CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 03 THEN otmetki.znachenie ELSE null END AS '03',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 04 THEN otmetki.znachenie ELSE null END AS '04',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 05 THEN otmetki.znachenie ELSE null END AS '05',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 06 THEN otmetki.znachenie ELSE NULL END AS '06',
+        CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 07 THEN otmetki.znachenie ELSE null END AS '07',
+        CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 08 THEN otmetki.znachenie ELSE NULL END AS '08',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 09 THEN otmetki.znachenie ELSE null END AS '09',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 10 THEN otmetki.znachenie ELSE null END AS '10',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 11 THEN otmetki.znachenie ELSE null END AS '11',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 12 THEN otmetki.znachenie ELSE null END AS '12',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 13 THEN otmetki.znachenie ELSE null END AS '13',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 14 THEN otmetki.znachenie ELSE null END AS '14',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 15 THEN otmetki.znachenie ELSE null END AS '15',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 16 THEN otmetki.znachenie ELSE null END AS '16',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 17 THEN otmetki.znachenie ELSE null END AS '17',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 18 THEN otmetki.znachenie ELSE null END AS '18',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 19 THEN otmetki.znachenie ELSE null END AS '19',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 20 THEN otmetki.znachenie ELSE null END AS '20',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 21 THEN otmetki.znachenie ELSE null END AS '21',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 22 THEN otmetki.znachenie ELSE null END AS '22',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 23 THEN otmetki.znachenie ELSE null END AS '23',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 24 THEN otmetki.znachenie ELSE null END AS '24',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 25 THEN otmetki.znachenie ELSE null END AS '25',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 26 THEN otmetki.znachenie ELSE null END AS '26',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 27 THEN otmetki.znachenie ELSE null END AS '27',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 28 THEN otmetki.znachenie ELSE null END AS '28',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 29 THEN otmetki.znachenie ELSE NULL END AS '29',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 30 THEN otmetki.znachenie ELSE null END AS '30',
+		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 31 THEN otmetki.znachenie ELSE null END AS '31',
+        AVG(otmetki.znachenie) AS 'Средний балл'
 FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
 INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
-INNER JOIN prepod ON zanyatiya.id_prepod = prepod.id_prepod
-WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_klassa = @Value2
-GROUP BY CONCAT(ucheniki.familiya,' ',ucheniki.imya,' ',ucheniki.otchestvo)
-ORDER BY CONCAT(ucheniki.familiya,' ',ucheniki.imya,' ',ucheniki.otchestvo);";
+INNER JOIN uroki ON zanyatiya.id_uroka = uroki.id_uroka
+INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
+WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_uchenika = @ID
+GROUP BY predmety.naimenovanie
+ORDER BY predmety.naimenovanie;";
 
         public string Select_SrBal_Klassa = $@"SELECT AVG(otmetki.znachenie)
 FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
 INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
 WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_klassa = @Value2;";
+
+        public string Select_SrBal_Uchenika = $@"SELECT AVG(otmetki.znachenie)
+FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
+INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
+WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_uchenika = @ID;";
         //Select
 
         //Insert

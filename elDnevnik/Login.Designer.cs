@@ -119,6 +119,7 @@
             this.button3.TabIndex = 4;
             this.button3.Text = "Войти";
             this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // textBox2
             // 
@@ -126,8 +127,10 @@
             this.textBox2.Location = new System.Drawing.Point(96, 71);
             this.textBox2.Margin = new System.Windows.Forms.Padding(15);
             this.textBox2.Name = "textBox2";
+            this.textBox2.PasswordChar = '#';
             this.textBox2.Size = new System.Drawing.Size(219, 26);
             this.textBox2.TabIndex = 3;
+            this.textBox2.Text = "sid2em";
             // 
             // label3
             // 
@@ -147,6 +150,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(219, 26);
             this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "emelya123";
             // 
             // label2
             // 
@@ -224,6 +228,7 @@
             this.textBox4.Location = new System.Drawing.Point(96, 71);
             this.textBox4.Margin = new System.Windows.Forms.Padding(15);
             this.textBox4.Name = "textBox4";
+            this.textBox4.PasswordChar = '#';
             this.textBox4.Size = new System.Drawing.Size(219, 26);
             this.textBox4.TabIndex = 1;
             this.textBox4.Text = "petrov1337";

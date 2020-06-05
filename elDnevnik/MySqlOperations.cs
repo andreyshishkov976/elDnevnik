@@ -403,7 +403,7 @@ namespace elDnevnik
                     workbook = workbooks.Open(Application.StartupPath + "\\blanks\\jurnal.xlsx");
                     worksheet = workbook.Worksheets.get_Item(1) as Worksheet;
                     ExcelApp.Cells[1, 1] = "Ведомость отметок " + Klass + " класса";
-                    ExcelApp.Cells[2, 1] = "По предмету "+'"'+Select_Text(MySqlQueries.Select_Predmet_Prepoda, ID_Prepoda)+'"'+" за "+ date.Value.Month.ToString() + '.'+ date.Value.Year.ToString();
+                    ExcelApp.Cells[2, 1] = "По предмету "+'"'+Select_Text(MySqlQueries.Select_Predmet_Prepoda, ID_Prepoda)+'"'+" за "+ date.Value.ToString();
                     ExcelApp.Cells[3, 1] = "Преподаватель: "+Select_Text(MySqlQueries.Select_FIO_Prepod, ID_Prepoda);
                     int ExCol = 1;
                     int ExRow = 6;
@@ -417,13 +417,19 @@ namespace elDnevnik
                         }
                         ExRow++;
                     }
-                    var cells = worksheet.get_Range("A5 ", "AE" + (ExRow - 1).ToString());
+                    var cells = worksheet.get_Range("A5 ", "AG" + (ExRow - 1).ToString());
                     cells.Borders[XlBordersIndex.xlInsideVertical].LineStyle = XlLineStyle.xlContinuous;
                     cells.Borders[XlBordersIndex.xlInsideHorizontal].LineStyle = XlLineStyle.xlContinuous;
                     cells.Borders[XlBordersIndex.xlEdgeTop].LineStyle = XlLineStyle.xlContinuous;
                     cells.Borders[XlBordersIndex.xlEdgeRight].LineStyle = XlLineStyle.xlContinuous;
                     cells.Borders[XlBordersIndex.xlEdgeLeft].LineStyle = XlLineStyle.xlContinuous;
                     cells.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlContinuous;
+                    if (date.Value.Month < 10)
+                        ExcelApp.Cells[ExRow + 1, 1] = "Средний балл по классу: " + Select_Text(MySqlQueries.Select_SrBal_Klassa, null, date.Value.Year.ToString() + '-' + '0' + date.Value.Month.ToString(),
+                    Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, Klass));
+                    else
+                        ExcelApp.Cells[ExRow + 1, 1] = "Средний балл по классу: " + Select_Text(MySqlQueries.Select_SrBal_Klassa, null, date.Value.Year.ToString() + '-' + date.Value.Month.ToString(),
+                    Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, Klass));
                     workbook.SaveAs(fileName);
                     ExcelApp.Visible = true;
                 }
@@ -441,7 +447,7 @@ namespace elDnevnik
             }
         }
 
-        public void Print_Uspevaemost(string Klass, DateTimePicker date, string ID_Prepoda, SaveFileDialog saveFileDialog)
+        public void Print_Uspevaemost(DateTimePicker date, string ID_Uchenika, SaveFileDialog saveFileDialog)
         {
             ExcelApplication ExcelApp = null;
             Workbooks workbooks = null;
@@ -450,27 +456,25 @@ namespace elDnevnik
             string fileName = null;
             saveFileDialog.DefaultExt = "Книга Excel|*.xlsx";
             saveFileDialog.Filter = "Книга Excel|*.xlsx|Книга Excel 93-2003|*.xls|PDF|*.pdf";
-            saveFileDialog.Title = "Сохранить сводную ведомость успеваемости учащихся как";
-            saveFileDialog.FileName = "Сводная ведомость успеваемости учащихся " + Klass + " класса";
+            saveFileDialog.Title = "Сохранить сводную ведомость успеваемости учащегося как";
+            saveFileDialog.FileName = "Сводная ведомость успеваемости " + Select_Text(MySqlQueries.Select_FIO_Ucheniki, ID_Uchenika);
             saveFileDialog.InitialDirectory = Application.StartupPath + "\\Ведомости\\";
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 fileName = saveFileDialog.FileName;
                 DataTable data = new DataTable();
                 if (date.Value.Month < 10)
-                    data = Select_DataTable(MySqlQueries.Select_Uspevaemost_Klassa, null, date.Value.Year.ToString() + '-' + '0' + date.Value.Month.ToString(),
-                    Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, Klass));
+                    data = Select_DataTable(MySqlQueries.Select_Uspevaemost_Uchenika, ID_Uchenika, date.Value.Year.ToString() + '-' + '0' + date.Value.Month.ToString());
                 else
-                    data = Select_DataTable(MySqlQueries.Select_Uspevaemost_Klassa, null, date.Value.Year.ToString() + '-' + '0' + date.Value.Month.ToString(),
-                    Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, Klass));
+                    data = Select_DataTable(MySqlQueries.Select_Uspevaemost_Uchenika, ID_Uchenika, date.Value.Year.ToString() + '-' + date.Value.Month.ToString());
                 try
                 {
                     ExcelApp = new ExcelApplication();
                     workbooks = ExcelApp.Workbooks;
                     workbook = workbooks.Open(Application.StartupPath + "\\blanks\\uspevaemost.xlsx");
                     worksheet = workbook.Worksheets.get_Item(1) as Worksheet;
-                    ExcelApp.Cells[2, 1] = Klass+" класса";
-                    ExcelApp.Cells[3, 1] = "За "+ date.Value.Month.ToString() + '.' + date.Value.Year.ToString();
+                    ExcelApp.Cells[1, 1] = "Сводная ведомость успеваемости " + Select_Text(MySqlQueries.Select_FIO_Ucheniki, ID_Uchenika);
+                    ExcelApp.Cells[2, 1] = "За "+ date.Value.ToString();
                     int ExCol = 1;
                     int ExRow = 6;
                     for (int i = 0; i < data.Rows.Count - 0; i++)
@@ -483,7 +487,7 @@ namespace elDnevnik
                         }
                         ExRow++;
                     }
-                    var cells = worksheet.get_Range("A5 ", "B" + (ExRow - 1).ToString());
+                    var cells = worksheet.get_Range("A5 ", "AF" + (ExRow - 1).ToString());
                     cells.Borders[XlBordersIndex.xlInsideVertical].LineStyle = XlLineStyle.xlContinuous;
                     cells.Borders[XlBordersIndex.xlInsideHorizontal].LineStyle = XlLineStyle.xlContinuous;
                     cells.Borders[XlBordersIndex.xlEdgeTop].LineStyle = XlLineStyle.xlContinuous;
@@ -491,11 +495,9 @@ namespace elDnevnik
                     cells.Borders[XlBordersIndex.xlEdgeLeft].LineStyle = XlLineStyle.xlContinuous;
                     cells.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlContinuous;
                     if (date.Value.Month < 10)
-                        ExcelApp.Cells[ExRow + 1, 1] = "Средний балл по классу: " + Select_Text(MySqlQueries.Select_SrBal_Klassa, null, date.Value.Year.ToString() + '-' + '0' + date.Value.Month.ToString(),
-                    Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, Klass));
+                        ExcelApp.Cells[ExRow + 1, 1] = "Средний балл: " + Select_Text(MySqlQueries.Select_SrBal_Uchenika, ID_Uchenika, date.Value.Year.ToString() + '-' + '0' + date.Value.Month.ToString());
                     else
-                        ExcelApp.Cells[ExRow + 1, 1] = "Средний балл по классу: " + Select_Text(MySqlQueries.Select_SrBal_Klassa, null, date.Value.Year.ToString() + '-' + date.Value.Month.ToString(),
-                    Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, Klass));
+                        ExcelApp.Cells[ExRow + 1, 1] = "Средний балл: " + Select_Text(MySqlQueries.Select_SrBal_Uchenika, ID_Uchenika, date.Value.Year.ToString() + '-' + date.Value.Month.ToString());
                     workbook.SaveAs(fileName);
                     ExcelApp.Visible = true;
                 }

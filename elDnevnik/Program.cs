@@ -24,7 +24,12 @@ namespace elDnevnik
                 PrepodWin prepodWin = new PrepodWin(login.ID);
                 Application.Run(prepodWin);
             }
-            if(login.DialogResult == DialogResult.OK)
+            if (login.DialogResult == DialogResult.No)
+            {
+                UchenikWin uchenikWin = new UchenikWin(login.ID);
+                Application.Run(uchenikWin);
+            }
+            if (login.DialogResult == DialogResult.OK)
             {
                 AdminWin adminWin = new AdminWin();
                 Application.Run(adminWin);

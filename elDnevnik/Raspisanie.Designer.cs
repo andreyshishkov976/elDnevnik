@@ -279,6 +279,7 @@
             this.MinimizeBox = false;
             this.Name = "Raspisanie";
             this.Text = "Расписание";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Raspisanie_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Raspisanie_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

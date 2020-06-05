@@ -31,7 +31,6 @@ namespace elDnevnik
         {
             MySqlOperations.OpenConnection();
             MessageBox.Show("Добро пожаловать " + MySqlOperations.Select_Text(MySqlQueries.Select_FIO_Prepod, ID_Prepoda) + '.', "Приветствие", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            MySqlOperations.Select_ComboBox(MySqlQueries.Select_Klassy_ComboBox, comboBox1);
             MySqlOperations.Select_ComboBox(MySqlQueries.Select_Klassy_ComboBox, comboBox4);
             Load_Raspisanie(ID_Prepoda);
             Load_Fakultativy(this, EventArgs.Empty);
@@ -112,7 +111,9 @@ namespace elDnevnik
                         do
                             Now = Now.AddDays(1);
                         while (MySqlOperations.Select_Text(MySqlQueries.Exists_Zanyatiya_Today, ID_Prepoda, Now.ToString("dddd", new CultureInfo("ru-RU")).Substring(0, 1).ToUpper() + Now.ToString("dddd", new CultureInfo("ru-RU")).Remove(0, 1).ToLower()) != "1");
-                        MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Homework, null, ID_Zanyatiya, Now.Year.ToString() + '-' + Now.Month.ToString() + '-' + Now.Day.ToString());
+                        MySqlOperations.Insert_Update_Delete(MySqlQueries.Insert_Homework, null, ID_Zanyatiya, Now.Year.ToString() + '-' + Now.Month.ToString() + '-' + Now.Day.ToString(),
+                            MySqlOperations.Select_Text(MySqlQueries.Select_Urok_Homework, ID_Prepoda, Now.ToString("dddd", new CultureInfo("ru-RU")).Substring(0, 1).ToUpper() + Now.ToString("dddd", new CultureInfo("ru-RU")).Remove(0, 1).ToLower(),
+                            MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, dataGridView.SelectedRows[0].Cells[1].Value.ToString())));
                         string ID_Homework = MySqlOperations.Select_Text(MySqlQueries.Select_Last_ID);
                         Zanyatiya zanyatiya = new Zanyatiya(MySqlQueries, MySqlOperations, ID_Zanyatiya, ID_Homework);
                         zanyatiya.Text += ID_Zanyatiya;
@@ -252,35 +253,18 @@ namespace elDnevnik
             Load_Zanyatiya(this, EventArgs.Empty);
         }
 
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            Load_Jurnal();
-        }
-
-        private void Load_Jurnal()
-        {
-            if (dateTimePicker1.Value.Month < 10)
-            MySqlOperations.Select_DataGridView(MySqlQueries.Select_Jurnal_Klassa, dataGridView1, null, dateTimePicker1.Value.Year.ToString() + '-' + '0' + dateTimePicker1.Value.Month.ToString(),
-                            ID_Prepoda, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text));
-            else
-                MySqlOperations.Select_DataGridView(MySqlQueries.Select_Jurnal_Klassa, dataGridView1, null, dateTimePicker1.Value.Year.ToString() + '-' + dateTimePicker1.Value.Month.ToString(),
-                            ID_Prepoda, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text));
-            if (dataGridView1.Rows.Count < 1)
-                dataGridView1.DataSource = null;
-        }
-
         private void Load_Uspevaemost()
         {
             if (dateTimePicker2.Value.Month < 10)
             {
-                MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uspevaemost_Klassa, dataGridView8, null, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString(),
+                MySqlOperations.Select_DataGridView(MySqlQueries.Select_Jurnal_Klassa, dataGridView8, null, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString(), ID_Prepoda,
                     MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
                 label6.Text = MySqlOperations.Select_Text(MySqlQueries.Select_SrBal_Klassa,null, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString(),
                     MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
             }
             else
             {
-                MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uspevaemost_Klassa, dataGridView8, null, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString(),
+                MySqlOperations.Select_DataGridView(MySqlQueries.Select_Jurnal_Klassa, dataGridView8, null, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString(), ID_Prepoda,
                     MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
                 label6.Text = MySqlOperations.Select_Text(MySqlQueries.Select_SrBal_Klassa, null, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString(),
                     MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
@@ -291,11 +275,6 @@ namespace elDnevnik
                 dataGridView8.DataSource = null;
                 label6.Text = "";
             }
-        }
-
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-            Load_Jurnal();
         }
 
         private void comboBox4_SelectedIndexChanged(object sender, EventArgs e)
@@ -343,14 +322,9 @@ namespace elDnevnik
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            MySqlOperations.Print_Jurnal(comboBox1.Text, dateTimePicker1, ID_Prepoda, saveFileDialog1);
-        }
-
         private void button2_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Print_Uspevaemost(comboBox4.Text, dateTimePicker2, ID_Prepoda, saveFileDialog1);
+            MySqlOperations.Print_Jurnal(comboBox4.Text, dateTimePicker2, ID_Prepoda, saveFileDialog1);
         }
     }
 }
