@@ -126,6 +126,11 @@ WHERE klassy.id_klassa = @ID AND raspisanie.den_nedeli = @Value1
 GROUP BY uroki.id_uroka
 ORDER BY uroki.poradok;";
 
+        public string Select_ID_Uroka_Homework = $@"SELECT uroki.id_uroka FROM uroki INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
+INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
+INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
+WHERE raspisanie.den_nedeli = @Value1 AND predmety.id_predmeta = @Value2 AND klassy.id_klassa = @Value3;";
+
         public string Select_Homework_Uchenika = $@"SELECT predmety.naimenovanie AS 'Предмет', homework.zadanie
 FROM homework 
 INNER JOIN uroki ON homework.id_uroka = uroki.id_uroka
@@ -302,7 +307,7 @@ WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_uchenika = 
 
         public string Insert_Otmetki = $@"INSERT INTO otmetki (id_uchenika, id_zanyatiya, znachenie) VALUES (@Value1, @Value2, @Value3);";
 
-        public string Insert_Homework = $@"INSERT INTO homework (id_zanyatiya, zadanie, date) VALUES (@Value1, '', @Value2);";
+        public string Insert_Homework = $@"INSERT INTO homework (id_zanyatiya, zadanie, date, id_uroka) VALUES (@Value1, '', @Value2, @Value3);";
         //Insert
 
         //Update
