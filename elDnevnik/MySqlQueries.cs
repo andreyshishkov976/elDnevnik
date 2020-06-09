@@ -126,11 +126,6 @@ WHERE klassy.id_klassa = @ID AND raspisanie.den_nedeli = @Value1
 GROUP BY uroki.id_uroka
 ORDER BY uroki.poradok;";
 
-        public string Select_ID_Uroka_Homework = $@"SELECT uroki.id_uroka FROM uroki INNER JOIN raspisanie ON uroki.id_raspisaniya = raspisanie.id_raspisaniya
-INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
-INNER JOIN klassy ON raspisanie.id_klassa = klassy.id_klassa
-WHERE raspisanie.den_nedeli = @Value1 AND predmety.id_predmeta = @Value2 AND klassy.id_klassa = @Value3;";
-
         public string Select_Homework_Uchenika = $@"SELECT predmety.naimenovanie AS 'Предмет', homework.zadanie
 FROM homework 
 INNER JOIN uroki ON homework.id_uroka = uroki.id_uroka
