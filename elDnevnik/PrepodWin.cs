@@ -379,5 +379,12 @@ namespace elDnevnik
                     dataTable.Rows[i][j] = dataGridView8.Rows[i].Cells[j].Value;
             MySqlOperations.Print_Jurnal(comboBox4.Text, dateTimePicker2, ID_Prepoda, saveFileDialog1, dataTable);
         }
+
+        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Load_Uspevaemost();
+            Load_Fakultativy(this, EventArgs.Empty);
+            Load_Zanyatiya(this, EventArgs.Empty);
+        }
     }
 }
