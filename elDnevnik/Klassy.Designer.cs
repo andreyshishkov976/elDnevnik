@@ -58,7 +58,7 @@
             this.button1.Location = new System.Drawing.Point(4, 65);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(170, 28);
-            this.button1.TabIndex = 2;
+            this.button1.TabIndex = 4;
             this.button1.Text = "Добавить";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -69,7 +69,7 @@
             this.button2.Location = new System.Drawing.Point(179, 65);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(170, 28);
-            this.button2.TabIndex = 3;
+            this.button2.TabIndex = 6;
             this.button2.Text = "Отмена";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -78,10 +78,10 @@
             // 
             this.button3.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.button3.Location = new System.Drawing.Point(4, 65);
+            this.button3.Location = new System.Drawing.Point(3, 65);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(170, 28);
-            this.button3.TabIndex = 4;
+            this.button3.TabIndex = 5;
             this.button3.Text = "Редактировать";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
@@ -102,7 +102,7 @@
             0});
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(52, 26);
-            this.numericUpDown1.TabIndex = 5;
+            this.numericUpDown1.TabIndex = 1;
             this.numericUpDown1.Value = new decimal(new int[] {
             1,
             0,
@@ -124,7 +124,7 @@
             this.comboBox1.Location = new System.Drawing.Point(228, 0);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(121, 28);
-            this.comboBox1.TabIndex = 6;
+            this.comboBox1.TabIndex = 2;
             // 
             // label2
             // 
@@ -152,7 +152,7 @@
             0});
             this.numericUpDown2.Name = "numericUpDown2";
             this.numericUpDown2.Size = new System.Drawing.Size(52, 26);
-            this.numericUpDown2.TabIndex = 9;
+            this.numericUpDown2.TabIndex = 3;
             this.numericUpDown2.Value = new decimal(new int[] {
             15,
             0,

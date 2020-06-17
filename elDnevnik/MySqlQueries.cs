@@ -187,87 +187,46 @@ WHERE CONCAT(klassy.nom_klassa, ' ', klassy.parallel) = @Value1;";
 FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
 WHERE otmetki.id_zanyatiya = @ID;";
 
-        public string Select_Jurnal_Klassa = $@"SELECT 
-        CONCAT(ucheniki.familiya,' ',ucheniki.imya,' ',ucheniki.otchestvo) AS 'Ф.И.О. ученика',
-  		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 01 THEN otmetki.znachenie ELSE null END AS '01',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 02 THEN otmetki.znachenie ELSE null END AS '02',
-        CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 03 THEN otmetki.znachenie ELSE null END AS '03',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 04 THEN otmetki.znachenie ELSE null END AS '04',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 05 THEN otmetki.znachenie ELSE null END AS '05',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 06 THEN otmetki.znachenie ELSE NULL END AS '06',
-        CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 07 THEN otmetki.znachenie ELSE null END AS '07',
-        CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 08 THEN otmetki.znachenie ELSE NULL END AS '08',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 09 THEN otmetki.znachenie ELSE null END AS '09',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 10 THEN otmetki.znachenie ELSE null END AS '10',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 11 THEN otmetki.znachenie ELSE null END AS '11',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 12 THEN otmetki.znachenie ELSE null END AS '12',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 13 THEN otmetki.znachenie ELSE null END AS '13',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 14 THEN otmetki.znachenie ELSE null END AS '14',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 15 THEN otmetki.znachenie ELSE null END AS '15',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 16 THEN otmetki.znachenie ELSE null END AS '16',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 17 THEN otmetki.znachenie ELSE null END AS '17',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 18 THEN otmetki.znachenie ELSE null END AS '18',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 19 THEN otmetki.znachenie ELSE null END AS '19',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 20 THEN otmetki.znachenie ELSE null END AS '20',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 21 THEN otmetki.znachenie ELSE null END AS '21',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 22 THEN otmetki.znachenie ELSE null END AS '22',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 23 THEN otmetki.znachenie ELSE null END AS '23',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 24 THEN otmetki.znachenie ELSE null END AS '24',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 25 THEN otmetki.znachenie ELSE null END AS '25',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 26 THEN otmetki.znachenie ELSE null END AS '26',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 27 THEN otmetki.znachenie ELSE null END AS '27',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 28 THEN otmetki.znachenie ELSE null END AS '28',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 29 THEN otmetki.znachenie ELSE NULL END AS '29',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 30 THEN otmetki.znachenie ELSE null END AS '30',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 31 THEN otmetki.znachenie ELSE null END AS '31',
-        AVG(otmetki.znachenie) AS 'Средний балл'
+        public string Select_Jurnal_Ucheniki = $@"SELECT CONCAT(familiya, ' ', imya, ' ', otchestvo) FROM ucheniki WHERE ucheniki.id_klassa = @Value1 ORDER BY CONCAT(ucheniki.familiya, ' ', ucheniki.imya, ' ', ucheniki.otchestvo);";
+
+        public string Select_Jurnal_Daily = $@"SELECT otmetki.znachenie AS @Value4
 FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
 INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
-INNER JOIN prepod ON zanyatiya.id_prepod = prepod.id_prepod
-WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND prepod.id_prepod = @Value2 AND ucheniki.id_klassa = @Value3
-GROUP BY CONCAT(ucheniki.familiya,' ',ucheniki.imya,' ',ucheniki.otchestvo)
-ORDER BY CONCAT(ucheniki.familiya,' ',ucheniki.imya,' ',ucheniki.otchestvo);";
+INNER JOIN prepod ON zanyatiya.id_prepod = prepod.id_prepod 
+WHERE zanyatiya.date = CONCAT(@Value1,'-', @Value4) AND prepod.id_prepod = @Value2 AND ucheniki.id_klassa = @Value3
+ORDER BY CONCAT(ucheniki.familiya, ' ', ucheniki.imya, ' ', ucheniki.otchestvo);";
 
-        public string Select_Uspevaemost_Uchenika = $@"SELECT 
-        predmety.naimenovanie AS 'Предмет',
-  		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 01 THEN otmetki.znachenie ELSE null END AS '01',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 02 THEN otmetki.znachenie ELSE null END AS '02',
-        CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 03 THEN otmetki.znachenie ELSE null END AS '03',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 04 THEN otmetki.znachenie ELSE null END AS '04',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 05 THEN otmetki.znachenie ELSE null END AS '05',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 06 THEN otmetki.znachenie ELSE NULL END AS '06',
-        CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 07 THEN otmetki.znachenie ELSE null END AS '07',
-        CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 08 THEN otmetki.znachenie ELSE NULL END AS '08',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 09 THEN otmetki.znachenie ELSE null END AS '09',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 10 THEN otmetki.znachenie ELSE null END AS '10',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 11 THEN otmetki.znachenie ELSE null END AS '11',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 12 THEN otmetki.znachenie ELSE null END AS '12',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 13 THEN otmetki.znachenie ELSE null END AS '13',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 14 THEN otmetki.znachenie ELSE null END AS '14',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 15 THEN otmetki.znachenie ELSE null END AS '15',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 16 THEN otmetki.znachenie ELSE null END AS '16',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 17 THEN otmetki.znachenie ELSE null END AS '17',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 18 THEN otmetki.znachenie ELSE null END AS '18',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 19 THEN otmetki.znachenie ELSE null END AS '19',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 20 THEN otmetki.znachenie ELSE null END AS '20',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 21 THEN otmetki.znachenie ELSE null END AS '21',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 22 THEN otmetki.znachenie ELSE null END AS '22',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 23 THEN otmetki.znachenie ELSE null END AS '23',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 24 THEN otmetki.znachenie ELSE null END AS '24',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 25 THEN otmetki.znachenie ELSE null END AS '25',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 26 THEN otmetki.znachenie ELSE null END AS '26',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 27 THEN otmetki.znachenie ELSE null END AS '27',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 28 THEN otmetki.znachenie ELSE null END AS '28',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 29 THEN otmetki.znachenie ELSE NULL END AS '29',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 30 THEN otmetki.znachenie ELSE null END AS '30',
-		CASE DATE_FORMAT(zanyatiya.date, '%d') WHEN 31 THEN otmetki.znachenie ELSE null END AS '31',
-        AVG(otmetki.znachenie) AS 'Средний балл'
+        public string Select_Jurnal_SrBal = $@"SELECT AVG(otmetki.znachenie) AS 'Средний балл'
+FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
+INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
+INNER JOIN prepod ON zanyatiya.id_prepod = prepod.id_prepod 
+WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND prepod.id_prepod = @Value2 AND ucheniki.id_klassa = @Value3
+GROUP BY ucheniki.id_uchenika
+ORDER BY CONCAT(ucheniki.familiya, ' ', ucheniki.imya, ' ', ucheniki.otchestvo);";
+
+        public string Select_Uspevaemost_Daily = $@"SELECT otmetki.znachenie AS @Value2
+FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
+INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
+INNER JOIN uroki ON zanyatiya.id_uroka = uroki.id_uroka
+INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
+WHERE zanyatiya.date = CONCAT(@Value1,'-', @Value2) AND ucheniki.id_uchenika = @ID
+ORDER BY predmety.naimenovanie;";
+
+        public string Select_Uspevaemost_Predmety = $@"SELECT predmety.naimenovanie 
 FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
 INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
 INNER JOIN uroki ON zanyatiya.id_uroka = uroki.id_uroka
 INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
 WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_uchenika = @ID
-GROUP BY predmety.naimenovanie
+GROUP BY predmety.id_predmeta
+ORDER BY predmety.naimenovanie;";
+
+        public string Select_Uspevaemost_SrBal = $@"SELECT AVG(otmetki.znachenie)
+FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
+INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
+INNER JOIN uroki ON zanyatiya.id_uroka = uroki.id_uroka
+INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
+WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_uchenika = @ID
 ORDER BY predmety.naimenovanie;";
 
         public string Select_SrBal_Klassa = $@"SELECT AVG(otmetki.znachenie)
@@ -282,7 +241,7 @@ WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_uchenika = 
         //Select
 
         //Insert
-        public string Insert_Auditorii = $@"INSERT INTO auditorii (nom_auditorii) VALUES (@Value1)";
+        public string Insert_Auditorii = $@"INSERT INTO auditorii (nom_auditorii) VALUES (@Value1);";
 
         public string Insert_Predmety = $@"INSERT INTO predmety (naimenovanie) VALUES (@Value1)";
 

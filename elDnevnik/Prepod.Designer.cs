@@ -70,7 +70,7 @@
             this.button1.Location = new System.Drawing.Point(4, 194);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(222, 28);
-            this.button1.TabIndex = 2;
+            this.button1.TabIndex = 7;
             this.button1.Text = "Добавить";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -81,7 +81,7 @@
             this.button2.Location = new System.Drawing.Point(232, 194);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(222, 28);
-            this.button2.TabIndex = 3;
+            this.button2.TabIndex = 9;
             this.button2.Text = "Отмена";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -93,7 +93,7 @@
             this.button3.Location = new System.Drawing.Point(4, 194);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(222, 28);
-            this.button3.TabIndex = 4;
+            this.button3.TabIndex = 8;
             this.button3.Text = "Редактировать";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
@@ -105,7 +105,7 @@
             this.textBox2.MaxLength = 50;
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(222, 26);
-            this.textBox2.TabIndex = 6;
+            this.textBox2.TabIndex = 2;
             // 
             // label2
             // 
@@ -124,7 +124,7 @@
             this.textBox3.MaxLength = 50;
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(222, 26);
-            this.textBox3.TabIndex = 8;
+            this.textBox3.TabIndex = 3;
             // 
             // label3
             // 
@@ -144,7 +144,7 @@
             this.comboBox1.Location = new System.Drawing.Point(232, 96);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(222, 28);
-            this.comboBox1.TabIndex = 9;
+            this.comboBox1.TabIndex = 4;
             // 
             // label4
             // 
@@ -163,7 +163,7 @@
             this.textBox4.MaxLength = 18;
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(222, 26);
-            this.textBox4.TabIndex = 14;
+            this.textBox4.TabIndex = 5;
             // 
             // label5
             // 
@@ -182,7 +182,7 @@
             this.textBox5.MaxLength = 18;
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(222, 26);
-            this.textBox5.TabIndex = 12;
+            this.textBox5.TabIndex = 6;
             // 
             // label6
             // 

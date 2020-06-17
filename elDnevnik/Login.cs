@@ -61,10 +61,7 @@ namespace elDnevnik
             ucheniki.Show();
         }
 
-        private void Ucheniki_Ucheniki_Closed(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        private void Ucheniki_Ucheniki_Closed(object sender, EventArgs e){}
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -76,10 +73,7 @@ namespace elDnevnik
             prepod.Show();
         }
 
-        private void Prepod_Prepod_Closed(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+        private void Prepod_Prepod_Closed(object sender, EventArgs e){}
 
         private void button4_Click(object sender, EventArgs e)
         {

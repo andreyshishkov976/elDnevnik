@@ -61,7 +61,7 @@
             this.button1.Location = new System.Drawing.Point(0, 199);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(206, 28);
-            this.button1.TabIndex = 2;
+            this.button1.TabIndex = 7;
             this.button1.Text = "Добавить";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -72,7 +72,7 @@
             this.button2.Location = new System.Drawing.Point(212, 199);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(206, 28);
-            this.button2.TabIndex = 3;
+            this.button2.TabIndex = 9;
             this.button2.Text = "Отмена";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
@@ -84,7 +84,7 @@
             this.button3.Location = new System.Drawing.Point(0, 199);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(206, 28);
-            this.button3.TabIndex = 4;
+            this.button3.TabIndex = 8;
             this.button3.Text = "Редактировать";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
@@ -96,7 +96,7 @@
             this.comboBox1.Location = new System.Drawing.Point(212, 0);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(206, 28);
-            this.comboBox1.TabIndex = 5;
+            this.comboBox1.TabIndex = 1;
             // 
             // dateTimePicker1
             // 
@@ -106,7 +106,7 @@
             this.dateTimePicker1.Location = new System.Drawing.Point(212, 68);
             this.dateTimePicker1.Name = "dateTimePicker1";
             this.dateTimePicker1.Size = new System.Drawing.Size(206, 26);
-            this.dateTimePicker1.TabIndex = 6;
+            this.dateTimePicker1.TabIndex = 3;
             // 
             // label2
             // 
@@ -125,7 +125,7 @@
             this.comboBox2.Location = new System.Drawing.Point(212, 100);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(206, 28);
-            this.comboBox2.TabIndex = 9;
+            this.comboBox2.TabIndex = 4;
             // 
             // label3
             // 
@@ -166,7 +166,7 @@
             this.dateTimePicker2.Name = "dateTimePicker2";
             this.dateTimePicker2.ShowUpDown = true;
             this.dateTimePicker2.Size = new System.Drawing.Size(73, 26);
-            this.dateTimePicker2.TabIndex = 14;
+            this.dateTimePicker2.TabIndex = 5;
             this.dateTimePicker2.Value = new System.DateTime(2020, 5, 20, 0, 0, 0, 0);
             // 
             // dateTimePicker3
@@ -178,7 +178,7 @@
             this.dateTimePicker3.Name = "dateTimePicker3";
             this.dateTimePicker3.ShowUpDown = true;
             this.dateTimePicker3.Size = new System.Drawing.Size(73, 26);
-            this.dateTimePicker3.TabIndex = 15;
+            this.dateTimePicker3.TabIndex = 6;
             this.dateTimePicker3.Value = new System.DateTime(2020, 5, 20, 0, 0, 0, 0);
             // 
             // comboBox3
@@ -188,7 +188,7 @@
             this.comboBox3.Location = new System.Drawing.Point(212, 34);
             this.comboBox3.Name = "comboBox3";
             this.comboBox3.Size = new System.Drawing.Size(206, 28);
-            this.comboBox3.TabIndex = 17;
+            this.comboBox3.TabIndex = 2;
             // 
             // label6
             // 

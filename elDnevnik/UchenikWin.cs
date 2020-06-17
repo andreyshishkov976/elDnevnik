@@ -97,19 +97,63 @@ namespace elDnevnik
 
         private void Load_Uspevaemost()
         {
+            DataTable dt = null;
             if (dateTimePicker2.Value.Month < 10)
+                dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Uspevaemost_Predmety, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString());
+            else
+                dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Uspevaemost_Predmety, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString());
+            if (dt.Rows.Count > 0)
             {
-                MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uspevaemost_Uchenika, dataGridView8, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString());
-                label6.Text = MySqlOperations.Select_Text(MySqlQueries.Select_SrBal_Uchenika, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString());
+                if (dateTimePicker2.Value.Month < 10)
+                {
+                    dataGridView8.Rows.Add(dt.Rows.Count);
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                        dataGridView8.Rows[i].Cells[0].Value = dt.Rows[i][0];
+                    for (int i = 1; i <= 31; i++)
+                        if (i < 10)
+                        {
+                            dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Uspevaemost_Daily, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString(), "0" + i.ToString());
+                            for (int j = 0; j < dt.Rows.Count; j++)
+                                dataGridView8.Rows[j].Cells[i].Value = dt.Rows[j][0];
+                        }
+                        else
+                        {
+                            dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Uspevaemost_Daily, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString(), i.ToString());
+                            for (int j = 0; j < dt.Rows.Count; j++)
+                                dataGridView8.Rows[j].Cells[i].Value = dt.Rows[j][0];
+                        }
+                    dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Uspevaemost_SrBal, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString());
+                    for (int j = 0; j < dt.Rows.Count; j++)
+                        dataGridView8.Rows[j].Cells[32].Value = dt.Rows[j][0];
+                    label6.Text = MySqlOperations.Select_Text(MySqlQueries.Select_SrBal_Uchenika, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString());
+                }
+                else
+                {
+                    dataGridView8.Rows.Add(dt.Rows.Count);
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                        dataGridView8.Rows[i].Cells[0].Value = dt.Rows[i][0];
+                    for (int i = 1; i <= 31; i++)
+                        if (i < 10)
+                        {
+                            dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Uspevaemost_Daily, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString(), "0" + i.ToString());
+                            for (int j = 0; j < dt.Rows.Count; j++)
+                                dataGridView8.Rows[j].Cells[i].Value = dt.Rows[j][0];
+                        }
+                        else
+                        {
+                            dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Uspevaemost_Daily, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString(), i.ToString());
+                            for (int j = 0; j < dt.Rows.Count; j++)
+                                dataGridView8.Rows[j].Cells[i].Value = dt.Rows[j][0];
+                        }
+                    dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Uspevaemost_SrBal, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString());
+                    for (int j = 0; j < dt.Rows.Count; j++)
+                        dataGridView8.Rows[j].Cells[32].Value = dt.Rows[j][0];
+                    label6.Text = MySqlOperations.Select_Text(MySqlQueries.Select_SrBal_Uchenika, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString());
+                }
             }
             else
             {
-                MySqlOperations.Select_DataGridView(MySqlQueries.Select_Uspevaemost_Uchenika, dataGridView8, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString());
-                label6.Text = MySqlOperations.Select_Text(MySqlQueries.Select_SrBal_Uchenika, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString());
-            }
-            if (dataGridView8.Rows.Count < 1)
-            {
-                dataGridView8.DataSource = null;
+                dataGridView8.Rows.Clear();
                 label6.Text = "";
             }
         }
@@ -121,7 +165,15 @@ namespace elDnevnik
 
         private void button2_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Print_Uspevaemost(dateTimePicker2, ID_Uchenika, saveFileDialog1);
+            DataTable dataTable = new DataTable();
+            for (int i = 0; i < dataGridView8.Rows.Count; i++)
+                dataTable.Rows.Add();
+            for (int i = 0; i < dataGridView8.Columns.Count; i++)
+                dataTable.Columns.Add();
+            for (int i = 0; i < dataGridView8.Rows.Count; i++)
+                for (int j = 0; j < dataGridView8.Columns.Count; j++)
+                    dataTable.Rows[i][j] = dataGridView8.Rows[i].Cells[j].Value;
+            MySqlOperations.Print_Uspevaemost(dateTimePicker2, ID_Uchenika, saveFileDialog1, dataTable);
         }
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)

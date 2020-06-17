@@ -84,7 +84,7 @@
             this.comboBox2.Location = new System.Drawing.Point(489, 1);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(235, 28);
-            this.comboBox2.TabIndex = 3;
+            this.comboBox2.TabIndex = 2;
             // 
             // label2
             // 
@@ -139,7 +139,7 @@
             this.button2.Location = new System.Drawing.Point(368, 53);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(346, 28);
-            this.button2.TabIndex = 12;
+            this.button2.TabIndex = 10;
             this.button2.Text = "Изменить";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Visible = false;
@@ -150,7 +150,7 @@
             this.button1.Location = new System.Drawing.Point(368, 53);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(346, 28);
-            this.button1.TabIndex = 11;
+            this.button1.TabIndex = 9;
             this.button1.Text = "Добавить";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
@@ -172,7 +172,7 @@
             this.comboBox5.Location = new System.Drawing.Point(162, 53);
             this.comboBox5.Name = "comboBox5";
             this.comboBox5.Size = new System.Drawing.Size(194, 28);
-            this.comboBox5.TabIndex = 10;
+            this.comboBox5.TabIndex = 7;
             // 
             // label5
             // 
@@ -231,7 +231,7 @@
             this.button3.Location = new System.Drawing.Point(368, 35);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(356, 28);
-            this.button3.TabIndex = 14;
+            this.button3.TabIndex = 5;
             this.button3.Text = "Отмена";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
@@ -242,7 +242,7 @@
             this.button4.Location = new System.Drawing.Point(4, 35);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(356, 28);
-            this.button4.TabIndex = 13;
+            this.button4.TabIndex = 3;
             this.button4.Text = "Добавить";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
@@ -253,7 +253,7 @@
             this.button5.Location = new System.Drawing.Point(4, 35);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(356, 28);
-            this.button5.TabIndex = 15;
+            this.button5.TabIndex = 4;
             this.button5.Text = "Изменить";
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);

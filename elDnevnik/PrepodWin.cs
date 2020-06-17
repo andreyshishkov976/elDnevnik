@@ -30,7 +30,7 @@ namespace elDnevnik
         private void PrepodWin_Load(object sender, EventArgs e)
         {
             MySqlOperations.OpenConnection();
-            MessageBox.Show("Добро пожаловать " + MySqlOperations.Select_Text(MySqlQueries.Select_FIO_Prepod, ID_Prepoda) + '.', "Приветствие", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Добро пожаловать, " + MySqlOperations.Select_Text(MySqlQueries.Select_FIO_Prepod, ID_Prepoda) + '.', "Приветствие", MessageBoxButtons.OK, MessageBoxIcon.Information);
             MySqlOperations.Select_ComboBox(MySqlQueries.Select_Klassy_ComboBox, comboBox4);
             Load_Raspisanie(ID_Prepoda);
             Load_Fakultativy(this, EventArgs.Empty);
@@ -255,24 +255,68 @@ namespace elDnevnik
 
         private void Load_Uspevaemost()
         {
-            if (dateTimePicker2.Value.Month < 10)
+            DataTable dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Jurnal_Ucheniki, null, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
+            if (dt.Rows.Count > 0)
             {
-                MySqlOperations.Select_DataGridView(MySqlQueries.Select_Jurnal_Klassa, dataGridView8, null, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString(), ID_Prepoda,
-                    MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
-                label6.Text = MySqlOperations.Select_Text(MySqlQueries.Select_SrBal_Klassa,null, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString(),
-                    MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
+                if (dateTimePicker2.Value.Month < 10)
+                {
+                    dataGridView8.Rows.Add(dt.Rows.Count);
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                        dataGridView8.Rows[i].Cells[0].Value = dt.Rows[i][0];
+                    for (int i = 1; i <= 31; i++)
+                        if (i < 10)
+                        {
+                            dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Jurnal_Daily, null, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString(), ID_Prepoda,
+                            MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text), "0" + i.ToString());
+                            for (int j = 0; j < dt.Rows.Count; j++)
+                                dataGridView8.Rows[j].Cells[i].Value = dt.Rows[j][0];
+                        }
+                        else
+                        {
+                            dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Jurnal_Daily, null, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString(), ID_Prepoda,
+                            MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text), i.ToString());
+                            for (int j = 0; j < dt.Rows.Count; j++)
+                                dataGridView8.Rows[j].Cells[i].Value = dt.Rows[j][0];
+                        }
+                    dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Jurnal_SrBal, null, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString(), ID_Prepoda,
+                            MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
+                    for (int j = 0; j < dt.Rows.Count; j++)
+                        dataGridView8.Rows[j].Cells[32].Value = dt.Rows[j][0];
+                    label6.Text = MySqlOperations.Select_Text(MySqlQueries.Select_SrBal_Klassa, null, dateTimePicker2.Value.Year.ToString() + '-' + '0' + dateTimePicker2.Value.Month.ToString(),
+                        MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
+                }
+                else
+                {
+                    dataGridView8.Rows.Add(dt.Rows.Count);
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                        dataGridView8.Rows[i].Cells[0].Value = dt.Rows[i][0];
+                    for (int i = 1; i <= 31; i++)
+                        if (i < 10)
+                        {
+                            dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Jurnal_Daily, null, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString(), ID_Prepoda,
+                            MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text), "0" + i.ToString());
+                            for (int j = 0; j < dt.Rows.Count; j++)
+                                dataGridView8.Rows[j].Cells[i].Value = dt.Rows[j][0];
+                        }
+                        else
+                        {
+                            dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Jurnal_Daily, null, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString(), ID_Prepoda,
+                            MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text), i.ToString());
+                            for (int j = 0; j < dt.Rows.Count; j++)
+                                dataGridView8.Rows[j].Cells[i].Value = dt.Rows[j][0];
+                        }
+                    dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Jurnal_SrBal, null, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString(), ID_Prepoda,
+                            MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
+                    for (int j = 0; j < dt.Rows.Count; j++)
+                        dataGridView8.Rows[j].Cells[32].Value = dt.Rows[j][0];
+                    label6.Text = MySqlOperations.Select_Text(MySqlQueries.Select_SrBal_Klassa, null, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString(),
+                        MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
+
+                }
             }
             else
             {
-                MySqlOperations.Select_DataGridView(MySqlQueries.Select_Jurnal_Klassa, dataGridView8, null, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString(), ID_Prepoda,
-                    MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
-                label6.Text = MySqlOperations.Select_Text(MySqlQueries.Select_SrBal_Klassa, null, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString(),
-                    MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
-
-            }
-            if (dataGridView8.Rows.Count < 1)
-            {
-                dataGridView8.DataSource = null;
+                dataGridView8.Rows.Clear();
                 label6.Text = "";
             }
         }
@@ -324,7 +368,15 @@ namespace elDnevnik
 
         private void button2_Click(object sender, EventArgs e)
         {
-            MySqlOperations.Print_Jurnal(comboBox4.Text, dateTimePicker2, ID_Prepoda, saveFileDialog1);
+            DataTable dataTable = new DataTable();
+            for (int i = 0; i < dataGridView8.Rows.Count; i++)
+                dataTable.Rows.Add();
+            for (int i = 0; i < dataGridView8.Columns.Count; i++)
+                dataTable.Columns.Add();
+            for (int i = 0; i < dataGridView8.Rows.Count; i++)
+                for (int j = 0; j < dataGridView8.Columns.Count; j++)
+                    dataTable.Rows[i][j] = dataGridView8.Rows[i].Cells[j].Value;
+            MySqlOperations.Print_Jurnal(comboBox4.Text, dateTimePicker2, ID_Prepoda, saveFileDialog1, dataTable);
         }
     }
 }

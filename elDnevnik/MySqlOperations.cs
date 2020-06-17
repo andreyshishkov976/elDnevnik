@@ -68,7 +68,7 @@ namespace elDnevnik
             }
         }
 
-        public DataTable Select_DataTable(string query, string ID = null, string Value1 = null, string Value2 = null, string Value3 = null)
+        public DataTable Select_DataTable(string query, string ID = null, string Value1 = null, string Value2 = null, string Value3 = null, string Value4 = null)
         {
             DataTable dataTable = new DataTable();
             MySqlCommand sqlCommand = new MySqlCommand(query, mySqlConnection);
@@ -76,6 +76,7 @@ namespace elDnevnik
             sqlCommand.Parameters.AddWithValue("Value1", Value1);
             sqlCommand.Parameters.AddWithValue("Value2", Value2);
             sqlCommand.Parameters.AddWithValue("Value3", Value3);
+            sqlCommand.Parameters.AddWithValue("Value4", Value4);
             MySqlDataAdapter dataAdapter = new MySqlDataAdapter(sqlCommand);
             dataAdapter.Fill(dataTable);
             return dataTable;
@@ -270,7 +271,7 @@ namespace elDnevnik
             range.Find.Execute(FindText: Identify, ReplaceWith: Text);
         }
 
-        public void Print_Jurnal(string Klass, DateTimePicker date, string ID_Prepoda, SaveFileDialog saveFileDialog)
+        public void Print_Jurnal(string Klass, DateTimePicker date, string ID_Prepoda, SaveFileDialog saveFileDialog, DataTable data)
         {
             ExcelApplication ExcelApp = null;
             Workbooks workbooks = null;
@@ -285,11 +286,6 @@ namespace elDnevnik
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 fileName = saveFileDialog.FileName;
-                DataTable data = new DataTable();
-                if (date.Value.Month < 10)
-                    data = Select_DataTable(MySqlQueries.Select_Jurnal_Klassa, null, date.Value.Year.ToString() + '-' + '0' + date.Value.Month.ToString(), ID_Prepoda, Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox,null, Klass));
-                else
-                    data = Select_DataTable(MySqlQueries.Select_Jurnal_Klassa, null, date.Value.Year.ToString() + '-' + date.Value.Month.ToString(), ID_Prepoda, Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, Klass));
                 try
                 {
                     ExcelApp = new ExcelApplication();
@@ -341,7 +337,7 @@ namespace elDnevnik
             }
         }
 
-        public void Print_Uspevaemost(DateTimePicker date, string ID_Uchenika, SaveFileDialog saveFileDialog)
+        public void Print_Uspevaemost(DateTimePicker date, string ID_Uchenika, SaveFileDialog saveFileDialog, DataTable data)
         {
             ExcelApplication ExcelApp = null;
             Workbooks workbooks = null;
@@ -356,11 +352,6 @@ namespace elDnevnik
             if (saveFileDialog.ShowDialog() == DialogResult.OK)
             {
                 fileName = saveFileDialog.FileName;
-                DataTable data = new DataTable();
-                if (date.Value.Month < 10)
-                    data = Select_DataTable(MySqlQueries.Select_Uspevaemost_Uchenika, ID_Uchenika, date.Value.Year.ToString() + '-' + '0' + date.Value.Month.ToString());
-                else
-                    data = Select_DataTable(MySqlQueries.Select_Uspevaemost_Uchenika, ID_Uchenika, date.Value.Year.ToString() + '-' + date.Value.Month.ToString());
                 try
                 {
                     ExcelApp = new ExcelApplication();
@@ -381,7 +372,7 @@ namespace elDnevnik
                         }
                         ExRow++;
                     }
-                    var cells = worksheet.get_Range("A5 ", "AF" + (ExRow - 1).ToString());
+                    var cells = worksheet.get_Range("A5 ", "AG" + (ExRow - 1).ToString());
                     cells.Borders[XlBordersIndex.xlInsideVertical].LineStyle = XlLineStyle.xlContinuous;
                     cells.Borders[XlBordersIndex.xlInsideHorizontal].LineStyle = XlLineStyle.xlContinuous;
                     cells.Borders[XlBordersIndex.xlEdgeTop].LineStyle = XlLineStyle.xlContinuous;

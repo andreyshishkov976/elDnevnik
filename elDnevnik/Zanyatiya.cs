@@ -47,6 +47,7 @@ namespace elDnevnik
                     break;
                 }
             MySqlOperations.Insert_Update_Delete(MySqlQueries.Update_Homework, ID_Homework, richTextBox1.Text);
+            this.Close();
         }
     }
 }
