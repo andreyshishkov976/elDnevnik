@@ -255,6 +255,7 @@ namespace elDnevnik
 
         private void Load_Uspevaemost()
         {
+            dataGridView8.Rows.Clear();
             DataTable dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Jurnal_Ucheniki, null, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
             if (dt.Rows.Count > 0)
             {
