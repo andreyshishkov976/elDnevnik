@@ -150,6 +150,19 @@ namespace elDnevnik
                         dataGridView8.Rows[j].Cells[32].Value = dt.Rows[j][0];
                     label6.Text = MySqlOperations.Select_Text(MySqlQueries.Select_SrBal_Uchenika, ID_Uchenika, dateTimePicker2.Value.Year.ToString() + '-' + dateTimePicker2.Value.Month.ToString());
                 }
+                for (int i = 0; i < dataGridView8.Rows.Count; i++)
+                {
+                    for (int j = 1; j < dataGridView8.Columns.Count - 1; j++)
+                    {
+                        if (dataGridView8.Rows[i].Cells[j].Value != null)
+                            if (int.Parse(dataGridView8.Rows[i].Cells[j].Value.ToString()) < 4)
+                            {
+                                dataGridView8.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
+                                break;
+                            }
+                    }
+                }
+                dataGridView8.ClearSelection();
             }
             else
             {

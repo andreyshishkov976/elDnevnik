@@ -25,6 +25,8 @@ namespace elDnevnik
             MySqlOperations.Select_ComboBox(MySqlQueries.Select_Predmety_ComboBox, comboBox1);
             MySqlOperations.Select_ComboBox(MySqlQueries.Select_Auditorii_ComboBox, comboBox2);
             MySqlOperations.Select_ComboBox(MySqlQueries.Select_Prepod_ComboBox, comboBox3);
+            dateTimePicker2.Value = DateTime.Parse("16:00:00");
+            dateTimePicker2.MinDate = dateTimePicker2.Value;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -69,5 +71,11 @@ namespace elDnevnik
             Fakultativy_Closed(this, EventArgs.Empty);
         }
         public event EventHandler Fakultativy_Closed;
+
+        private void dateTimePicker2_ValueChanged(object sender, EventArgs e)
+        {
+            dateTimePicker3.MinDate = dateTimePicker2.Value.AddHours(0.75);
+            dateTimePicker3.Value = dateTimePicker3.MinDate;
+        }
     }
 }

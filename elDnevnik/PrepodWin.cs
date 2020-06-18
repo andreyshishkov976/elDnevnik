@@ -314,6 +314,19 @@ namespace elDnevnik
                         MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
 
                 }
+                for (int i = 0; i < dataGridView8.Rows.Count; i++)
+                {
+                    for (int j = 1; j < dataGridView8.Columns.Count-1; j++)
+                    {
+                        if (dataGridView8.Rows[i].Cells[j].Value != null)
+                            if (int.Parse(dataGridView8.Rows[i].Cells[j].Value.ToString()) < 4)
+                            {
+                                dataGridView8.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
+                                break;
+                            }
+                    }
+                }
+                dataGridView8.ClearSelection();
             }
             else
             {
