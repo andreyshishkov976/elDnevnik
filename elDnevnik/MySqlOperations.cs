@@ -337,6 +337,68 @@ namespace elDnevnik
             }
         }
 
+        public void Print_Chetvert(string Klass, DateTimePicker date, string ID_Prepoda, SaveFileDialog saveFileDialog, DataTable data)
+        {
+            ExcelApplication ExcelApp = null;
+            Workbooks workbooks = null;
+            Workbook workbook = null;
+            Worksheet worksheet = null;
+            string fileName = null;
+            saveFileDialog.DefaultExt = "Книга Excel|*.xlsx";
+            saveFileDialog.Filter = "Книга Excel|*.xlsx|Книга Excel 93-2003|*.xls|PDF|*.pdf";
+            saveFileDialog.Title = "Сохранить ведомость отметок как";
+            saveFileDialog.FileName = "Ведомость четвертных отметок " + Klass + " класса";
+            saveFileDialog.InitialDirectory = Application.StartupPath + "\\Ведомости\\";
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                fileName = saveFileDialog.FileName;
+                try
+                {
+                    ExcelApp = new ExcelApplication();
+                    workbooks = ExcelApp.Workbooks;
+                    workbook = workbooks.Open(Application.StartupPath + "\\blanks\\chetvert.xlsx");
+                    worksheet = workbook.Worksheets.get_Item(1) as Worksheet;
+                    ExcelApp.Cells[1, 1] = "Ведомость четвертных отметок " + Klass + " класса";
+                    ExcelApp.Cells[2, 1] = "По предмету " + '"' + Select_Text(MySqlQueries.Select_Predmet_Prepoda, ID_Prepoda) + '"';
+                    ExcelApp.Cells[3, 1] = "Преподаватель: " + Select_Text(MySqlQueries.Select_FIO_Prepod, ID_Prepoda);
+                    int ExCol = 1;
+                    int ExRow = 6;
+                    for (int i = 0; i < data.Rows.Count - 0; i++)
+                    {
+                        ExCol = 1;
+                        for (int j = 0; j < data.Columns.Count; j++)
+                        {
+                            ExcelApp.Cells[ExRow, ExCol] = data.Rows[i][j].ToString();
+                            ExCol++;
+                        }
+                        ExRow++;
+                    }
+                    var cells = worksheet.get_Range("A5 ", "F" + (ExRow - 1).ToString());
+                    cells.Borders[XlBordersIndex.xlInsideVertical].LineStyle = XlLineStyle.xlContinuous;
+                    cells.Borders[XlBordersIndex.xlInsideHorizontal].LineStyle = XlLineStyle.xlContinuous;
+                    cells.Borders[XlBordersIndex.xlEdgeTop].LineStyle = XlLineStyle.xlContinuous;
+                    cells.Borders[XlBordersIndex.xlEdgeRight].LineStyle = XlLineStyle.xlContinuous;
+                    cells.Borders[XlBordersIndex.xlEdgeLeft].LineStyle = XlLineStyle.xlContinuous;
+                    cells.Borders[XlBordersIndex.xlEdgeBottom].LineStyle = XlLineStyle.xlContinuous;
+                    ExcelApp.Cells[ExRow + 1, 1] = "Средний балл по классу: " + Select_Text(MySqlQueries.Select_SrBal_Klassa_Chetvert, null,
+                Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, Klass));
+                    workbook.SaveAs(fileName);
+                    ExcelApp.Visible = true;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                finally
+                {
+                    Marshal.ReleaseComObject(worksheet);
+                    Marshal.ReleaseComObject(workbook);
+                    Marshal.ReleaseComObject(workbooks);
+                    Marshal.ReleaseComObject(ExcelApp);
+                }
+            }
+        }
+
         public void Print_Uspevaemost(DateTimePicker date, string ID_Uchenika, SaveFileDialog saveFileDialog, DataTable data)
         {
             ExcelApplication ExcelApp = null;

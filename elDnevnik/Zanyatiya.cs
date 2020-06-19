@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient.Authentication;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -38,16 +39,24 @@ namespace elDnevnik
         private void button1_Click(object sender, EventArgs e)
         {
             int a = 0;
+            bool finish = true;
             foreach (DataGridViewRow row in dataGridView1.Rows)
-                if (int.TryParse(row.Cells[2].Value.ToString(), out a) == true)
-                    MySqlOperations.Insert_Update_Delete(MySqlQueries.Update_Otmetki, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString());
+                if (int.TryParse(row.Cells[2].Value.ToString(), out a) == true || row.Cells[2].Value.ToString() == "")
+                    if (a < 10)
+                        MySqlOperations.Insert_Update_Delete(MySqlQueries.Update_Otmetki, row.Cells[0].Value.ToString(), row.Cells[2].Value.ToString());
+                    else
+                    {
+                        MessageBox.Show("В качестве отметки для " + row.Cells[1].Value.ToString() + " было выставлено число, превышающее 10.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        finish = false;
+                    }
                 else
                 {
                     MessageBox.Show("В качестве отметки для " + row.Cells[1].Value.ToString() + " было выставлено не число.", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    break;
+                    finish = false;
                 }
             MySqlOperations.Insert_Update_Delete(MySqlQueries.Update_Homework, ID_Homework, richTextBox1.Text);
-            this.Close();
+            if (finish)
+                this.Close();
         }
     }
 }

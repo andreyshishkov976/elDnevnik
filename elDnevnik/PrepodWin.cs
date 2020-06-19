@@ -32,6 +32,7 @@ namespace elDnevnik
             MySqlOperations.OpenConnection();
             MessageBox.Show("Добро пожаловать, " + MySqlOperations.Select_Text(MySqlQueries.Select_FIO_Prepod, ID_Prepoda) + '.', "Приветствие", MessageBoxButtons.OK, MessageBoxIcon.Information);
             MySqlOperations.Select_ComboBox(MySqlQueries.Select_Klassy_ComboBox, comboBox4);
+            MySqlOperations.Select_ComboBox(MySqlQueries.Select_Klassy_ComboBox, comboBox1);
             Load_Raspisanie(ID_Prepoda);
             Load_Fakultativy(this, EventArgs.Empty);
             DayOfWeek = DateTime.Now.ToString("dddd", new CultureInfo("ru-RU")).Substring(0, 1).ToUpper() + DateTime.Now.ToString("dddd", new CultureInfo("ru-RU")).Remove(0, 1).ToLower();
@@ -318,7 +319,7 @@ namespace elDnevnik
                 {
                     for (int j = 1; j < dataGridView8.Columns.Count-1; j++)
                     {
-                        if (dataGridView8.Rows[i].Cells[j].Value != null)
+                        if (dataGridView8.Rows[i].Cells[j].Value != null && dataGridView8.Rows[i].Cells[j].Value.ToString() != "")
                             if (int.Parse(dataGridView8.Rows[i].Cells[j].Value.ToString()) < 4)
                             {
                                 dataGridView8.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
@@ -332,6 +333,58 @@ namespace elDnevnik
             {
                 dataGridView8.Rows.Clear();
                 label6.Text = "";
+            }
+        }
+
+        private void Load_Chetvert()
+        {
+            dataGridView1.Rows.Clear();
+            DataTable dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Jurnal_Ucheniki, null, MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text));
+            if (dt.Rows.Count > 0)
+            {
+                dataGridView1.Rows.Add(dt.Rows.Count);
+                for (int i = 0; i < dt.Rows.Count; i++)
+                    dataGridView1.Rows[i].Cells[0].Value = dt.Rows[i][0];
+                dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_1_Chetvert, null, ID_Prepoda,
+                MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text));
+                for (int j = 0; j < dt.Rows.Count; j++)
+                    dataGridView1.Rows[j].Cells[1].Value = dt.Rows[j][0];
+                dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_2_Chetvert, null, ID_Prepoda,
+                MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text));
+                for (int j = 0; j < dt.Rows.Count; j++)
+                    dataGridView1.Rows[j].Cells[2].Value = dt.Rows[j][0];
+                dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_3_Chetvert, null, ID_Prepoda,
+                MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text));
+                for (int j = 0; j < dt.Rows.Count; j++)
+                    dataGridView1.Rows[j].Cells[3].Value = dt.Rows[j][0];
+                dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_4_Chetvert, null, ID_Prepoda,
+                MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text));
+                for (int j = 0; j < dt.Rows.Count; j++)
+                    dataGridView1.Rows[j].Cells[4].Value = dt.Rows[j][0];
+                dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Chetvert_SrBal, null, ID_Prepoda,
+                        MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
+                for (int j = 0; j < dt.Rows.Count; j++)
+                    dataGridView1.Rows[j].Cells[5].Value = dt.Rows[j][0];
+                label7.Text = MySqlOperations.Select_Text(MySqlQueries.Select_SrBal_Klassa_Chetvert, null,
+                    MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    for (int j = 1; j < dataGridView1.Columns.Count - 1; j++)
+                    {
+                        if (dataGridView1.Rows[i].Cells[j].Value != null && dataGridView1.Rows[i].Cells[j].Value.ToString() != "")
+                            if (int.Parse(dataGridView1.Rows[i].Cells[j].Value.ToString()) < 4)
+                            {
+                                dataGridView1.Rows[i].DefaultCellStyle.BackColor = Color.Yellow;
+                                break;
+                            }
+                    }
+                }
+                dataGridView1.ClearSelection();
+            }
+            else
+            {
+                dataGridView1.Rows.Clear();
+                label7.Text = "";
             }
         }
 
@@ -396,8 +449,27 @@ namespace elDnevnik
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             Load_Uspevaemost();
+            Load_Chetvert();
             Load_Fakultativy(this, EventArgs.Empty);
             Load_Zanyatiya(this, EventArgs.Empty);
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            Load_Chetvert();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            DataTable dataTable = new DataTable();
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                dataTable.Rows.Add();
+            for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                dataTable.Columns.Add();
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                    dataTable.Rows[i][j] = dataGridView1.Rows[i].Cells[j].Value;
+            MySqlOperations.Print_Chetvert(comboBox1.Text, null, ID_Prepoda, saveFileDialog1, dataTable);
         }
     }
 }

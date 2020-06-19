@@ -196,11 +196,12 @@ INNER JOIN prepod ON zanyatiya.id_prepod = prepod.id_prepod
 WHERE zanyatiya.date = CONCAT(@Value1,'-', @Value4) AND prepod.id_prepod = @Value2 AND ucheniki.id_klassa = @Value3
 ORDER BY CONCAT(ucheniki.familiya, ' ', ucheniki.imya, ' ', ucheniki.otchestvo);";
 
-        public string Select_Jurnal_SrBal = $@"SELECT AVG(otmetki.znachenie) AS 'Средний балл'
+        public string Select_Jurnal_SrBal = $@"SELECT ROUND(AVG(otmetki.znachenie),2) AS 'Средний балл'
 FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
 INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
 INNER JOIN prepod ON zanyatiya.id_prepod = prepod.id_prepod 
 WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND prepod.id_prepod = @Value2 AND ucheniki.id_klassa = @Value3
+AND otmetki.znachenie IS NOT NULL AND otmetki.znachenie <> ''
 GROUP BY ucheniki.id_uchenika
 ORDER BY CONCAT(ucheniki.familiya, ' ', ucheniki.imya, ' ', ucheniki.otchestvo);";
 
@@ -221,23 +222,77 @@ WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_uchenika = 
 GROUP BY predmety.id_predmeta
 ORDER BY predmety.naimenovanie;";
 
-        public string Select_Uspevaemost_SrBal = $@"SELECT AVG(otmetki.znachenie)
+        public string Select_Uspevaemost_SrBal = $@"SELECT ROUND(AVG(otmetki.znachenie),2)
 FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
 INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
 INNER JOIN uroki ON zanyatiya.id_uroka = uroki.id_uroka
 INNER JOIN predmety ON uroki.id_predmeta = predmety.id_predmeta
 WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_uchenika = @ID
+AND otmetki.znachenie IS NOT NULL AND otmetki.znachenie <> ''
 ORDER BY predmety.naimenovanie;";
 
-        public string Select_SrBal_Klassa = $@"SELECT AVG(otmetki.znachenie)
+        public string Select_SrBal_Klassa = $@"SELECT ROUND(AVG(otmetki.znachenie),2)
 FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
 INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
-WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_klassa = @Value2;";
+WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_klassa = @Value2
+AND otmetki.znachenie IS NOT NULL AND otmetki.znachenie <> '';";
 
-        public string Select_SrBal_Uchenika = $@"SELECT AVG(otmetki.znachenie)
+        public string Select_SrBal_Uchenika = $@"SELECT ROUND(AVG(otmetki.znachenie),2)
 FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
 INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
-WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_uchenika = @ID;";
+WHERE DATE_FORMAT(zanyatiya.date, '%Y-%m') = @Value1 AND ucheniki.id_uchenika = @ID
+AND otmetki.znachenie IS NOT NULL AND otmetki.znachenie <> '';";
+
+        public string Select_1_Chetvert = $@"SELECT ROUND(AVG(otmetki.znachenie),0) AS 'Средний балл'
+FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
+INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
+INNER JOIN prepod ON zanyatiya.id_prepod = prepod.id_prepod 
+WHERE zanyatiya.date BETWEEN '2020-09-01' AND '2020-10-31' AND prepod.id_prepod = @Value1 AND ucheniki.id_klassa = @Value2
+AND otmetki.znachenie IS NOT NULL AND otmetki.znachenie <> ''
+GROUP BY ucheniki.id_uchenika
+ORDER BY CONCAT(ucheniki.familiya, ' ', ucheniki.imya, ' ', ucheniki.otchestvo);";
+        
+        public string Select_2_Chetvert = $@"SELECT ROUND(AVG(otmetki.znachenie),0) AS 'Средний балл'
+FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
+INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
+INNER JOIN prepod ON zanyatiya.id_prepod = prepod.id_prepod 
+WHERE zanyatiya.date BETWEEN '2020-11-11' AND '2020-12-24' AND prepod.id_prepod = @Value1 AND ucheniki.id_klassa = @Value2
+AND otmetki.znachenie IS NOT NULL AND otmetki.znachenie <> ''
+GROUP BY ucheniki.id_uchenika
+ORDER BY CONCAT(ucheniki.familiya, ' ', ucheniki.imya, ' ', ucheniki.otchestvo);";
+        
+        public string Select_3_Chetvert = $@"SELECT ROUND(AVG(otmetki.znachenie),0) AS 'Средний балл'
+FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
+INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
+INNER JOIN prepod ON zanyatiya.id_prepod = prepod.id_prepod 
+WHERE zanyatiya.date BETWEEN '2021-01-13' AND '2021-03-28' AND prepod.id_prepod = @Value1 AND ucheniki.id_klassa = @Value2
+AND otmetki.znachenie IS NOT NULL AND otmetki.znachenie <> ''
+GROUP BY ucheniki.id_uchenika
+ORDER BY CONCAT(ucheniki.familiya, ' ', ucheniki.imya, ' ', ucheniki.otchestvo);";
+        
+        public string Select_4_Chetvert = $@"SELECT ROUND(AVG(otmetki.znachenie),0) AS 'Средний балл'
+FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
+INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
+INNER JOIN prepod ON zanyatiya.id_prepod = prepod.id_prepod 
+WHERE zanyatiya.date BETWEEN '2021-04-06' AND '2021-05-30' AND prepod.id_prepod = @Value1 AND ucheniki.id_klassa = @Value2
+AND otmetki.znachenie IS NOT NULL AND otmetki.znachenie <> ''
+GROUP BY ucheniki.id_uchenika
+ORDER BY CONCAT(ucheniki.familiya, ' ', ucheniki.imya, ' ', ucheniki.otchestvo);";
+
+        public string Select_Chetvert_SrBal = $@"SELECT ROUND(AVG(otmetki.znachenie),0) AS 'Средний балл'
+FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
+INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
+INNER JOIN prepod ON zanyatiya.id_prepod = prepod.id_prepod 
+WHERE zanyatiya.date BETWEEN '2020-09-01' AND '2021-05-30' AND prepod.id_prepod = @Value1 AND ucheniki.id_klassa = @Value2
+AND otmetki.znachenie IS NOT NULL AND otmetki.znachenie <> ''
+GROUP BY ucheniki.id_uchenika
+ORDER BY CONCAT(ucheniki.familiya, ' ', ucheniki.imya, ' ', ucheniki.otchestvo);";
+
+        public string Select_SrBal_Klassa_Chetvert = $@"SELECT ROUND(AVG(otmetki.znachenie),2)
+FROM otmetki INNER JOIN ucheniki ON otmetki.id_uchenika = ucheniki.id_uchenika
+INNER JOIN zanyatiya ON otmetki.id_zanyatiya = zanyatiya.id_zanyatiya
+WHERE zanyatiya.date BETWEEN '2020-09-01' AND '2021-05-30' AND ucheniki.id_klassa = @Value1
+AND otmetki.znachenie IS NOT NULL AND otmetki.znachenie <> '';";
         //Select
 
         //Insert
