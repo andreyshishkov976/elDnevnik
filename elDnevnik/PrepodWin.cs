@@ -361,10 +361,22 @@ namespace elDnevnik
                 MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox1.Text));
                 for (int j = 0; j < dt.Rows.Count; j++)
                     dataGridView1.Rows[j].Cells[4].Value = dt.Rows[j][0];
-                dt = MySqlOperations.Select_DataTable(MySqlQueries.Select_Chetvert_SrBal, null, ID_Prepoda,
-                        MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
-                for (int j = 0; j < dt.Rows.Count; j++)
-                    dataGridView1.Rows[j].Cells[5].Value = dt.Rows[j][0];
+                double sum = 0;
+                double kol = 0;
+                for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                {
+                    for (int j = 1; j < dataGridView1.Columns.Count - 1; j++)
+                    {
+                        if(dataGridView1.Rows[i].Cells[j].Value != null && dataGridView1.Rows[i].Cells[j].Value.ToString() != "")
+                        {
+                            kol += 1;
+                            sum += int.Parse(dataGridView1.Rows[i].Cells[j].Value.ToString());
+                        }
+                    }
+                    dataGridView1.Rows[i].Cells[5].Value = Math.Round(sum / kol,MidpointRounding.AwayFromZero).ToString();
+                    sum = 0;
+                    kol = 0;
+                }
                 label7.Text = MySqlOperations.Select_Text(MySqlQueries.Select_SrBal_Klassa_Chetvert, null,
                     MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassy_ComboBox, null, comboBox4.Text));
                 for (int i = 0; i < dataGridView1.Rows.Count; i++)
