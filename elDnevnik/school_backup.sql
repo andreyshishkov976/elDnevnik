@@ -140,7 +140,7 @@ CREATE TABLE IF NOT EXISTS `predmety` (
 INSERT IGNORE INTO `predmety` (`id_predmeta`, `naimenovanie`) VALUES
 	(1, 'Русский язык'),
 	(2, 'Математика'),
-	(3, 'Беларусский язык'),
+	(3, 'Белорусский язык'),
 	(4, 'Физика'),
 	(5, 'Информатика'),
 	(6, 'История Беларуси'),

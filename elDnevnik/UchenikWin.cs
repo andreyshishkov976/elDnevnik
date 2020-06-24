@@ -36,7 +36,7 @@ namespace elDnevnik
             while (dateTime.DayOfWeek != System.DayOfWeek.Monday)
                 dateTime = dateTime.AddDays(-1);
             dateTimePicker1.Value = dateTime;
-            MessageBox.Show("Добро пожаловать " + MySqlOperations.Select_Text(MySqlQueries.Select_FIO_Ucheniki, ID_Uchenika) + '.', "Приветствие", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Добро пожаловать, " + MySqlOperations.Select_Text(MySqlQueries.Select_FIO_Ucheniki, ID_Uchenika) + '.', "Приветствие", MessageBoxButtons.OK, MessageBoxIcon.Information);
             Load_Raspisanie(MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassa_Ucheniki, ID_Uchenika));
             Load_Uspevaemost();
         }
