@@ -349,5 +349,10 @@ namespace elDnevnik
                     MySqlOperations.Insert_Update_Delete(MySqlQueries.Delete_Raspisanie, row.Cells[0].Value.ToString());
             }
         }
+
+        private void справкаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Программа " + '"' + "elDnevnik" + '"' + " разработана по индивидуальному заданию на дипломной проект. Программа позволяет осуществлять функции добавления, удаления, редактирования записей таблиц. Предусмотрен вывод на печать следующих документов: Ведомость отметок за месяц по предмету, Ведомость отметок учащегося, Ведомость четвертных отметок. Предусмотрены проверки нежелательных действий пользователя. Программу разработал учащаяся группы ПО-41 Синенок Ангелина Олеговна.", "О программе...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }

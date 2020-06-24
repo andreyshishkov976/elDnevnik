@@ -412,20 +412,20 @@ namespace elDnevnik
 
         private void поискToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex == 4)
+            if (tabControl1.SelectedIndex == 2)
                 MySqlOperations.Search(toolStripTextBox1, dataGridView9);
-            if (tabControl1.SelectedIndex == 5)
+            if (tabControl1.SelectedIndex == 3)
                 MySqlOperations.Search(toolStripTextBox1, dataGridView10);
         }
 
         private void фильтрToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (tabControl1.SelectedIndex == 4)
+            if (tabControl1.SelectedIndex == 2)
             {
                 MySqlOperations.Select_DataGridView(MySqlQueries.Select_Zanyatiya_Filter, dataGridView9, ID_Prepoda, toolStripTextBox1.Text);
                 dataGridView9.Columns[0].Visible = false;
             }
-            if (tabControl1.SelectedIndex == 5)
+            if (tabControl1.SelectedIndex == 3)
             {
                 MySqlOperations.Select_DataGridView(MySqlQueries.Select_Fakultativy_Prepoda_Filter, dataGridView10, ID_Prepoda, toolStripTextBox1.Text);
                 dataGridView10.Columns[0].Visible = false;
@@ -482,6 +482,11 @@ namespace elDnevnik
                 for (int j = 0; j < dataGridView1.Columns.Count; j++)
                     dataTable.Rows[i][j] = dataGridView1.Rows[i].Cells[j].Value;
             MySqlOperations.Print_Chetvert(comboBox1.Text, null, ID_Prepoda, saveFileDialog1, dataTable);
+        }
+
+        private void справкаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Программа " + '"' + "elDnevnik" + '"' + " разработана по индивидуальному заданию на дипломной проект. Программа позволяет осуществлять функции добавления, удаления, редактирования записей таблиц. Предусмотрен вывод на печать следующих документов: Ведомость отметок за месяц по предмету, Ведомость отметок учащегося, Ведомость четвертных отметок. Предусмотрены проверки нежелательных действий пользователя. Программу разработал учащаяся группы ПО-41 Синенок Ангелина Олеговна.", "О программе...", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

@@ -199,5 +199,10 @@ namespace elDnevnik
                 dateTimePicker1.Value = dateTimePicker1.Value.AddDays(-6);
             Load_Homework(MySqlOperations.Select_Text(MySqlQueries.Select_ID_Klassa_Ucheniki, ID_Uchenika), dateTimePicker1);
         }
+
+        private void справкаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Программа " + '"' + "elDnevnik" + '"' + " разработана по индивидуальному заданию на дипломной проект. Программа позволяет осуществлять функции добавления, удаления, редактирования записей таблиц. Предусмотрен вывод на печать следующих документов: Ведомость отметок за месяц по предмету, Ведомость отметок учащегося, Ведомость четвертных отметок. Предусмотрены проверки нежелательных действий пользователя. Программу разработал учащаяся группы ПО-41 Синенок Ангелина Олеговна.", "О программе...", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }
