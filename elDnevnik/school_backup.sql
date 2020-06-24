@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `auditorii` (
 
 -- Дамп данных таблицы school.auditorii: ~9 rows (приблизительно)
 /*!40000 ALTER TABLE `auditorii` DISABLE KEYS */;
-INSERT IGNORE INTO `auditorii` (`id_auditorii`, `nom_auditorii`) VALUES
+INSERT INTO `auditorii` (`id_auditorii`, `nom_auditorii`) VALUES
 	(1, '1-1'),
 	(2, '1-2'),
 	(3, '1-3'),
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `fakultativy` (
 
 -- Дамп данных таблицы school.fakultativy: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `fakultativy` DISABLE KEYS */;
-INSERT IGNORE INTO `fakultativy` (`id_fakultativa`, `id_predmeta`, `id_prepod`, `date_provedeniya`, `id_auditorii`, `time_n`, `time_k`) VALUES
+INSERT INTO `fakultativy` (`id_fakultativa`, `id_predmeta`, `id_prepod`, `date_provedeniya`, `id_auditorii`, `time_n`, `time_k`) VALUES
 	(2, 1, 1, '2020-03-02', 1, '19:35:00', '20:35:00');
 /*!40000 ALTER TABLE `fakultativy` ENABLE KEYS */;
 
@@ -77,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `homework` (
 
 -- Дамп данных таблицы school.homework: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `homework` DISABLE KEYS */;
-INSERT IGNORE INTO `homework` (`id_homework`, `id_zanyatiya`, `zadanie`, `date`, `id_uroka`) VALUES
+INSERT INTO `homework` (`id_homework`, `id_zanyatiya`, `zadanie`, `date`, `id_uroka`) VALUES
 	(2, 3, 'ДЗ для 04 сентября 2020', '2020-09-04', 14),
 	(3, 4, 'ДЗ для 05 сентября 2020', '2020-09-05', 14),
 	(4, 5, 'ДЗ для 14 ноября 2020', '2020-11-14', 10),
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `klassy` (
 
 -- Дамп данных таблицы school.klassy: ~4 rows (приблизительно)
 /*!40000 ALTER TABLE `klassy` DISABLE KEYS */;
-INSERT IGNORE INTO `klassy` (`id_klassa`, `nom_klassa`, `parallel`, `kolvo_uch`) VALUES
+INSERT INTO `klassy` (`id_klassa`, `nom_klassa`, `parallel`, `kolvo_uch`) VALUES
 	(1, 1, 'А', 20),
 	(2, 2, 'А', 20),
 	(3, 1, 'Б', 20),
@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `otmetki` (
 
 -- Дамп данных таблицы school.otmetki: ~8 rows (приблизительно)
 /*!40000 ALTER TABLE `otmetki` DISABLE KEYS */;
-INSERT IGNORE INTO `otmetki` (`id_otmetki`, `id_uchenika`, `id_zanyatiya`, `znachenie`) VALUES
+INSERT INTO `otmetki` (`id_otmetki`, `id_uchenika`, `id_zanyatiya`, `znachenie`) VALUES
 	(1, 1, 3, '6'),
 	(2, 1, 5, '5'),
 	(3, 2, 3, '4'),
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `predmety` (
 
 -- Дамп данных таблицы school.predmety: ~7 rows (приблизительно)
 /*!40000 ALTER TABLE `predmety` DISABLE KEYS */;
-INSERT IGNORE INTO `predmety` (`id_predmeta`, `naimenovanie`) VALUES
+INSERT INTO `predmety` (`id_predmeta`, `naimenovanie`) VALUES
 	(1, 'Русский язык'),
 	(2, 'Математика'),
 	(3, 'Белорусский язык'),
@@ -163,7 +163,7 @@ CREATE TABLE IF NOT EXISTS `prepod` (
 
 -- Дамп данных таблицы school.prepod: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `prepod` DISABLE KEYS */;
-INSERT IGNORE INTO `prepod` (`id_prepod`, `familiya`, `imya`, `otchestvo`, `id_predmeta`, `login`, `parol`) VALUES
+INSERT INTO `prepod` (`id_prepod`, `familiya`, `imya`, `otchestvo`, `id_predmeta`, `login`, `parol`) VALUES
 	(1, 'Петров', 'Иван', 'Васильевич', 1, '14881337', 'petrov1337');
 /*!40000 ALTER TABLE `prepod` ENABLE KEYS */;
 
@@ -179,7 +179,7 @@ CREATE TABLE IF NOT EXISTS `raspisanie` (
 
 -- Дамп данных таблицы school.raspisanie: ~5 rows (приблизительно)
 /*!40000 ALTER TABLE `raspisanie` DISABLE KEYS */;
-INSERT IGNORE INTO `raspisanie` (`id_raspisaniya`, `id_klassa`, `den_nedeli`) VALUES
+INSERT INTO `raspisanie` (`id_raspisaniya`, `id_klassa`, `den_nedeli`) VALUES
 	(1, 1, 'Вторник'),
 	(4, 1, 'Пятница'),
 	(7, 1, 'Понедельник'),
@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `ucheniki` (
 
 -- Дамп данных таблицы school.ucheniki: ~0 rows (приблизительно)
 /*!40000 ALTER TABLE `ucheniki` DISABLE KEYS */;
-INSERT IGNORE INTO `ucheniki` (`id_uchenika`, `familiya`, `imya`, `otchestvo`, `id_klassa`, `login`, `parol`) VALUES
+INSERT INTO `ucheniki` (`id_uchenika`, `familiya`, `imya`, `otchestvo`, `id_klassa`, `login`, `parol`) VALUES
 	(1, 'Сидорова', 'Александра', 'Емельяновна', 1, 'emelya123', 'sid2em'),
 	(2, 'Петров', 'Иосиф', 'Лаврентьевич', 1, 'petrov', 'petrov');
 /*!40000 ALTER TABLE `ucheniki` ENABLE KEYS */;
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS `uroki` (
 
 -- Дамп данных таблицы school.uroki: ~16 rows (приблизительно)
 /*!40000 ALTER TABLE `uroki` DISABLE KEYS */;
-INSERT IGNORE INTO `uroki` (`id_uroka`, `id_raspisaniya`, `id_predmeta`, `id_auditorii`, `poradok`) VALUES
+INSERT INTO `uroki` (`id_uroka`, `id_raspisaniya`, `id_predmeta`, `id_auditorii`, `poradok`) VALUES
 	(1, 1, 1, 4, '1-й урок'),
 	(8, 1, 2, 4, '2-й урок'),
 	(9, 1, 3, 4, '3-й урок'),
@@ -257,7 +257,7 @@ CREATE TABLE IF NOT EXISTS `zanyatiya` (
 
 -- Дамп данных таблицы school.zanyatiya: ~2 rows (приблизительно)
 /*!40000 ALTER TABLE `zanyatiya` DISABLE KEYS */;
-INSERT IGNORE INTO `zanyatiya` (`id_zanyatiya`, `id_uroka`, `date`, `id_prepod`) VALUES
+INSERT INTO `zanyatiya` (`id_zanyatiya`, `id_uroka`, `date`, `id_prepod`) VALUES
 	(3, 10, '2020-09-01', 1),
 	(4, 20, '2020-09-04', 1),
 	(5, 1, '2020-11-13', 1),
